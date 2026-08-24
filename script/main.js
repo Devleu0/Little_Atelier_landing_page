@@ -159,6 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const bg = gameplaySection.querySelector('.gameplay-background');
     const header = gameplaySection.querySelector('.section-header');
     const features = gameplaySection.querySelectorAll('.gameplay-feature');
+    const modelViewer = gameplaySection.querySelector('model-viewer, .model-viewer-container');
 
     const handleGameplayScroll = () => {
       const rect = spacer.getBoundingClientRect();
@@ -227,6 +228,25 @@ document.addEventListener('DOMContentLoaded', () => {
         header.style.opacity = 1 - (progress - 0.8) / 0.1;
       } else if (progress > 0.9 || progress < 0.20) {
         header.style.opacity = 0;
+      }
+
+      // 3. 3D Model Viewer 페이드 연동 (25% -> 45% 페이드인 / 80% -> 95% 페이드아웃)
+      if (modelViewer) {
+        if (progress >= 0.25 && progress <= 0.45) {
+          const opacity = (progress - 0.25) / 0.20;
+          modelViewer.style.opacity = opacity;
+          modelViewer.style.transform = `translateY(${20 * (1 - opacity)}px)`;
+        } else if (progress > 0.45 && progress < 0.80) {
+          modelViewer.style.opacity = 1;
+          modelViewer.style.transform = `translateY(0px)`;
+        } else if (progress >= 0.80 && progress <= 0.95) {
+          const opacity = 1 - (progress - 0.80) / 0.15;
+          modelViewer.style.opacity = opacity;
+          modelViewer.style.transform = `translateY(${20 * (1 - opacity)}px)`;
+        } else {
+          modelViewer.style.opacity = 0;
+          modelViewer.style.transform = `translateY(20px)`;
+        }
       }
 
       // 3. 피처 아이템 순차적 애니메이션 — 카드 간 전환이므로 평범한 opacity fade만 사용 (사각형 클립 없음)
