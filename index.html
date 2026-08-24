@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="meta.title">작은 나무 공방 | 나무 가구 제작 시뮬레이션</title>
+    <meta name="description" content="조립부터 페인팅, 사포질까지 직접 손으로 가구를 완성하는 아늑한 목공방 시뮬레이션 게임, 작은 나무 공방."
+        data-i18n-content="meta.description">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style/style.css">
+    <script>
+        if (/Mobi|Android/i.test(navigator.userAgent)) {
+            window.location.href = "mobile.html";
+        }
+    </script>
+</head>
+
+<body>
+    <nav>
+        <div class="logo" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">작은 나무 공방</div>
+        <ul>
+            <li><a href="#vision" class="nav-main" data-i18n="nav.vision">제작 과정</a></li>
+            <li><a href="#gameplay" class="nav-main" data-i18n="nav.gameplay">게임플레이</a></li>
+            <li><a href="#dev" class="nav-main" data-i18n="nav.dev">개발 이야기</a></li>
+            <li><a href="#contact" class="nav-main" data-i18n="nav.contact">체험</a></li>
+        </ul>
+        <div class="gtranslate_wrapper"></div>
+
+        <button class="nav-toggle" aria-label="메뉴 열기" data-i18n-aria-label="nav.menuOpen">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <section class="hero">
+        <div class="title-img-wrap">
+            <img src="images/hero-scene.jpg" alt="작은 나무 공방 타이틀 이미지">
+        </div>
+        <div class="hero-grid container">
+            <div class="hero-content">
+                <span class="hero-badge">SIM</span>
+                <h1>작은 나무 공방</h1>
+                <p class="subtitle catchphrase" data-i18n="hero.catchphrase">"나무 향 가득한 작업대에서, 나만의 가구를 완성하다"</p>
+                <p class="description" data-i18n-html="hero.description">
+                    책상과 의자를 <span class="highlight">직접 조립하고 칠하며</span> 가구가 완성되는 순간의 성취감을 느껴보세요.
+                </p>
+                <div class="cta-row">
+                    <button class="cta-primary" data-target="#gameplay" data-i18n="cta.play">플레이하기</button>
+                    <button class="cta-secondary" data-target="#vision" data-i18n="cta.explore">제작 과정 보기</button>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="material-icons stat-icon">handyman</span>
+                        <strong class="stat-number" data-i18n="stats.visionTypes">4단계 제작</strong>
+                        <span data-i18n="stats.visionTypesLabel">조립 · 페인팅 · 사포질 · 완성</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="material-icons stat-icon">mouse</span>
+                        <strong class="stat-number" data-i18n="stats.audio">마우스 조작</strong>
+                        <span data-i18n="stats.audioLabel">드래그 & 클릭 인터랙션</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="material-icons stat-icon">chair</span>
+                        <strong class="stat-number" data-i18n="stats.pov">책상 · 의자</strong>
+                        <span data-i18n="stats.povLabel">나만의 가구 제작</span>
+                    </div>
+                </div>
+            </div>
+            <div class="device-wrapper">
+                <div class="vr-hmd-viewer">
+                    <div class="hmd-top-plate"></div>
+                    <div class="hmd-side-panel"></div>
+                    <div class="hmd-visor-flare"></div>
+                    <div class="hmd-lens-effect"></div>
+                    <div class="hmd-visor-main">
+                        <img src="images/stage-complete.jpg" alt="완성된 가구" data-i18n-alt="alt.mockup">
+                    </div>
+                    <div class="hmd-ui-overlay">
+                        <span class="material-icons">workspace_premium</span>
+                        <span class="hmd-status">COMPLETE!</span>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <span></span>
+            </div>
+        </div>
+    </section>
+
+    <section id="spotlight" class="spotlight-band" aria-label="공방 이야기">
+        <div class="spotlight-spacer">
+            <div class="spotlight-sticky">
+                <div class="spotlight-ambient"></div>
+
+                <div class="spotlight-slide" data-index="0">
+                    <img src="images/stage-materials.jpg" alt="재료 준비" data-i18n-alt="ticker.tag.vision">
+                    <div class="spotlight-copy">
+                        <span class="material-icons spotlight-icon">inventory_2</span>
+                        <span class="hud-tag" data-i18n="ticker.tag.vision">재료 준비</span>
+                        <p class="spotlight-text" data-i18n="ticker.content.vision">다리, 판자, 나사까지 — 가구가 되기 전 재료 하나하나를
+                            직접 살펴보고 준비합니다.</p>
+                    </div>
+                </div>
+
+                <div class="spotlight-slide" data-index="1">
+                    <img src="images/stage-assembling.jpg" alt="조립" data-i18n-alt="ticker.tag.audio">
+                    <div class="spotlight-copy">
+                        <span class="material-icons spotlight-icon">handyman</span>
+                        <span class="hud-tag" data-i18n="ticker.tag.audio">조립</span>
+                        <p class="spotlight-text" data-i18n="ticker.content.audio">아이템을 드래그해 정해진 위치에 배치하면, 부품들이
+                            하나의 가구로 맞춰집니다.</p>
+                    </div>
+                </div>
+
+                <div class="spotlight-slide" data-index="2">
+                    <img src="images/stage-painting.jpg" alt="페인팅" data-i18n-alt="ticker.tag.tactile">
+                    <div class="spotlight-copy">
+                        <span class="material-icons spotlight-icon">palette</span>
+                        <span class="hud-tag" data-i18n="ticker.tag.tactile">페인팅</span>
+                        <p class="spotlight-text" data-i18n="ticker.content.tactile">원하는 색을 골라 붓질하듯 칠하고, 광택 정도까지
+                            실시간으로 조절할 수 있습니다.</p>
+                    </div>
+                </div>
+
+                <div class="spotlight-slide" data-index="3">
+                    <img src="images/stage-sanding.jpg" alt="사포질" data-i18n-alt="ticker.tag.obstacle">
+                    <div class="spotlight-copy">
+                        <span class="material-icons spotlight-icon">brush</span>
+                        <span class="hud-tag" data-i18n="ticker.tag.obstacle">사포질</span>
+                        <p class="spotlight-text" data-i18n="ticker.content.obstacle">거친 표면을 문질러 매끈하게 다듬으면, 손끝의
+                            감촉까지 살아있는 가구가 완성됩니다.</p>
+                    </div>
+                </div>
+
+                <div class="spotlight-dots">
+                    <button class="spotlight-dot is-active" data-index="0" aria-label="1"></button>
+                    <button class="spotlight-dot" data-index="1" aria-label="2"></button>
+                    <button class="spotlight-dot" data-index="2" aria-label="3"></button>
+                    <button class="spotlight-dot" data-index="3" aria-label="4"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="vision" class="section section-dark">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="section-title" data-i18n-html="vision.sectionTitle">5단계로 완성하는 <span>나만의 가구</span></h2>
+                <p class="section-subtitle" data-i18n="vision.sectionSubtitle">탭을 눌러 각 단계를 비교해보세요</p>
+            </div>
+
+            <div class="vision-layout reveal">
+                <div class="vision-tabs">
+                    <button class="vision-tab active" data-key="materials">
+                        <span class="vision-tab-thumb"><img src="images/stage-materials.jpg" alt="재료 준비"
+                                data-i18n-alt="vision.materials.title"></span>
+                        <span class="vision-tab-name" data-i18n="vision.materials.title">재료 준비</span>
+                    </button>
+                    <button class="vision-tab" data-key="assembling">
+                        <span class="vision-tab-thumb"><img src="images/stage-assembling.jpg" alt="조립"
+                                data-i18n-alt="vision.assembling.title"></span>
+                        <span class="vision-tab-name" data-i18n="vision.assembling.title">조립</span>
+                    </button>
+                    <button class="vision-tab" data-key="painting">
+                        <span class="vision-tab-thumb"><img src="images/stage-painting.jpg" alt="페인팅"
+                                data-i18n-alt="vision.painting.title"></span>
+                        <span class="vision-tab-name" data-i18n="vision.painting.title">페인팅</span>
+                    </button>
+                    <button class="vision-tab" data-key="sanding">
+                        <span class="vision-tab-thumb"><img src="images/stage-sanding.jpg" alt="사포질"
+                                data-i18n-alt="vision.sanding.title"></span>
+                        <span class="vision-tab-name" data-i18n="vision.sanding.title">사포질</span>
+                    </button>
+                    <button class="vision-tab" data-key="complete">
+                        <span class="vision-tab-thumb"><img src="images/stage-complete.jpg" alt="완성"
+                                data-i18n-alt="vision.complete.title"></span>
+                        <span class="vision-tab-name" data-i18n="vision.complete.title">완성</span>
+                    </button>
+                </div>
+
+                <div class="vision-compare" id="visionCompare" style="--split:50">
+
+                    <div class="vision-compare-media">
+                        <img src="images/stage-materials.jpg" alt="이전 단계" class="vision-img vision-img-normal"
+                            data-i18n-alt="alt.visionPreview">
+
+                        <div class="vision-effect-layer">
+                            <img src="images/stage-materials.jpg" alt="현재 단계" class="vision-img vision-img-effect"
+                                data-i18n-alt="alt.visionPreview">
+                        </div>
+
+                        <span class="vision-side-label vision-side-label-left" data-i18n="vision.normalLabel">이전
+                            단계</span>
+                        <span class="vision-side-label vision-side-label-right" data-i18n="vision.effectLabel">현재
+                            단계</span>
+                    </div>
+
+                    <div class="vision-divider" id="visionDivider" role="slider" tabindex="0" aria-label="비교 비율 조절"
+                        aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+                        <span class="vision-divider-handle"><span class="material-icons">compare_arrows</span></span>
+                    </div>
+                </div>
+
+                <div class="vision-controls">
+                    <div class="vision-controls-left">
+                        <button class="vision-peek-btn" id="visionPeekBtn" type="button"
+                            data-i18n="vision.peekButton">누르고
+                            있으면 이전 단계가 보여요</button>
+                    </div>
+                    <div class="vision-viewer-caption">
+                        <div class="vision-viewer-title" data-i18n="vision.materials.title">재료 준비</div>
+                        <p class="vision-viewer-desc" data-i18n="vision.viewerIntroDesc">다리, 상판, 나사까지. 가구가 되기 전 모든
+                            재료를 한눈에 확인하고 제작을 시작합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gameplay" class="section">
+        <div class="gameplay-spacer">
+            <div class="gameplay-sticky-container">
+                <div class="gameplay-background">
+                    <img src="images/gameplay-bg.jpg" alt="공방 배경" style="width:100%;height:100%;object-fit:cover;">
+                </div>
+                <div class="gameplay-features-wrapper container">
+                    <div class="section-header">
+                        <h2 class="section-title" data-i18n-html="gameplay.title">몰입형 <span>제작 경험</span></h2>
+                        <p class="section-subtitle" data-i18n="gameplay.subtitle">마우스 하나로 완성하는 나만의 가구</p>
+                    </div>
+                    <div class="gameplay-feature" id="feature-1">
+                        <div class="feature-item-icon"><span class="material-icons">drag_indicator</span></div>
+                        <div class="feature-item-title" data-i18n="gameplay.feature1.title">직관적인 조작</div>
+                        <div class="feature-item-desc" data-i18n="gameplay.feature1.desc">아이템을 드래그해 원하는 위치에 배치하고 조립
+                        </div>
+                    </div>
+                    <div class="gameplay-feature" id="feature-2">
+                        <div class="feature-item-icon"><span class="material-icons">format_paint</span></div>
+                        <div class="feature-item-title" data-i18n="gameplay.feature2.title">색상과 광택 연출</div>
+                        <div class="feature-item-desc" data-i18n="gameplay.feature2.desc">머티리얼 속성 제어로 색상과 광택을 실시간 수정
+                        </div>
+                    </div>
+                    <div class="gameplay-feature" id="feature-3">
+                        <div class="feature-item-icon"><span class="material-icons">auto_awesome</span></div>
+                        <div class="feature-item-title" data-i18n="gameplay.feature3.title">완성의 성취감</div>
+                        <div class="feature-item-desc" data-i18n="gameplay.feature3.desc">카메라 회전과 특수 효과로 완성 순간을 연출</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="dev" class="section section-dark">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="section-title" data-i18n-html="dev.sectionTitle">개발 <span>이야기</span></h2>
+                <p class="section-subtitle" data-i18n="dev.sectionSubtitle">Unity 엔진으로 만든 상태 관리와 인터랙션 시스템</p>
+            </div>
+            <div class="dev-grid">
+                <div class="dev-card reveal">
+                    <div class="dev-card-bar">
+                        <span></span><span></span><span></span>
+                        <span class="dev-card-filename">StateMachine — Craft Flow</span>
+                    </div>
+                    <div class="dev-card-media">
+                        <img src="images/dev-statemachine.jpg" alt="상태 머신 흐름도" data-i18n-alt="dev.card1.imgAlt">
+                    </div>
+                    <div class="dev-card-body">
+                        <h4 data-i18n="dev.card1.title">명확한 제작 흐름 관리</h4>
+                        <p data-i18n="dev.card1.desc">'조립 → 페인팅 → 사포질 → 완성'의 작업 과정을 상태 머신 형식으로 명확하게 관리합니다.</p>
+                    </div>
+                </div>
+                <div class="dev-card reveal">
+                    <div class="dev-card-bar">
+                        <span></span><span></span><span></span>
+                        <span class="dev-card-filename">Material — Realtime Control</span>
+                    </div>
+                    <div class="dev-card-media">
+                        <img src="images/dev-material.jpg" alt="머티리얼 실시간 제어" data-i18n-alt="dev.card2.imgAlt">
+                    </div>
+                    <div class="dev-card-body">
+                        <h4 data-i18n="dev.card2.title">실시간 색상 · 광택 제어</h4>
+                        <p data-i18n="dev.card2.desc">머티리얼 속성을 제어해 페인팅 색상 변경과 광택(Smoothness)을 실시간으로 수정합니다.</p>
+                    </div>
+                </div>
+                <div class="dev-card reveal">
+                    <div class="dev-card-bar">
+                        <span></span><span></span><span></span>
+                        <span class="dev-card-filename">Modeling — Custom Furniture</span>
+                    </div>
+                    <div class="dev-card-media">
+                        <img src="images/dev-3dmodel.jpg" alt="3D 모델링 및 UV 작업" data-i18n-alt="dev.card3.imgAlt">
+                    </div>
+                    <div class="dev-card-body">
+                        <h4 data-i18n="dev.card3.title">직접 제작한 3D 가구 모델</h4>
+                        <p data-i18n="dev.card3.desc">책상과 의자 등 제작 대상 가구를 직접 3D 모델링하고 UV 작업까지 진행했습니다.</p>
+                    </div>
+                </div>
+                <div class="dev-card reveal">
+                    <div class="dev-card-bar">
+                        <span></span><span></span><span></span>
+                        <span class="dev-card-filename">UX — Popup & Tutorial</span>
+                    </div>
+                    <div class="dev-card-media">
+                        <img src="images/dev-ux.jpg" alt="완성 연출 UX 개선" data-i18n-alt="dev.card4.imgAlt">
+                    </div>
+                    <div class="dev-card-body">
+                        <h4 data-i18n="dev.card4.title">플레이 경험 다듬기</h4>
+                        <p data-i18n="dev.card4.desc">완성 연출 팝업의 크기를 줄이고 자동 삭제 코루틴을 추가해, 결과물을 가리지 않도록 개선했습니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="cta-section">
+        <div class="container" style="position: relative; z-index: 2;">
+            <div class="cta-content-wrapper">
+                <h2 class="reveal" data-i18n="contact.title">지금 나만의 가구를 만들어보세요!</h2>
+                <p class="reveal" data-i18n="contact.body">
+                    바닥에 앉아 공부하던 그 순간, 이제 당신의 손으로 책상과 의자를 완성해보세요.
+                </p>
+                <div class="cta-buttons reveal">
+                    <button class="cta-primary" data-target="#gameplay" data-i18n="cta.play">플레이하기</button>
+                    <button class="cta-secondary" data-target="#vision" data-i18n="cta.explore">제작 과정 보기</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">작은 나무 공방</div>
+                    <p class="footer-description" data-i18n="footer.description">
+                        직접 조립하고 칠하며 가구를 완성하는 아늑한 목공방 시뮬레이션
+                    </p>
+                </div>
+
+                <div class="footer-section">
+                    <h4 data-i18n="footer.quickLinks">빠른 링크</h4>
+                    <ul class="footer-links-list">
+                        <li><a href="#vision" data-i18n="footer.linkVision">제작 과정</a></li>
+                        <li><a href="#gameplay" data-i18n="nav.gameplay">게임플레이</a></li>
+                        <li><a href="#dev" data-i18n="nav.dev">개발 이야기</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4 data-i18n="nav.contact">체험</h4>
+                    <p><a href="mailto:dnlwjddn@jnu.ac.kr">dnlwjddn@jnu.ac.kr</a></p>
+                    <div class="social-links">
+                        <a href="#"><span class="material-icons">link</span></a>
+                        <a href="#"><span class="material-icons">share</span></a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4 data-i18n="footer.legal">법적 고지</h4>
+                    <ul class="footer-links-list">
+                        <li><a href="#" data-i18n="footer.terms">이용약관</a></li>
+                        <li><a href="#" data-i18n="footer.privacy">개인정보 처리방침</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p data-i18n="footer.copyright">&copy; 2026 작은 나무 공방. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="sticky-cta">
+        <div class="sticky-cta-text">
+            <strong>작은 나무 공방</strong>
+            <span data-i18n="stickyCta.text">나만의 가구를 직접 만들어 보세요</span>
+        </div>
+        <button class="cta-primary" data-target="#gameplay" data-i18n="cta.play">플레이하기</button>
+    </div>
+
+    <div class="lightbox">
+        <div class="lightbox-content">
+            <img src="" alt="확대된 이미지" data-i18n-alt="alt.lightboxImage">
+            <button class="lightbox-close" aria-label="닫기" data-i18n-aria-label="alt.close">&times;</button>
+        </div>
+    </div>
+
+    <!--
+      참고: 드롭다운에는 일본어(ja)도 그대로 노출됩니다.
+      다만 script/i18n.js가 gtranslate의 doGTranslate() 함수를 감싸서,
+      사용자가 드롭다운에서 "日本語"를 선택하면 Google 자동번역 대신
+      lang/ja.json 기반 커스텀 번역을 적용합니다. 다른 언어는 기존처럼
+      gtranslate가 그대로 처리합니다.
+    -->
+    <script>window.gtranslateSettings = { "default_language": "ko", "native_language_names": true, "detect_browser_language": true, "languages": ["ko", "fr", "it", "es", "en", "ja", "pt", "zh-TW"], "wrapper_selector": ".gtranslate_wrapper", "horizontal_position": "right", "vertical_position": "top", "select_language_label": "Select" }</script>
+    <script src="https://cdn.gtranslate.net/widgets/latest/dropdown.js" defer></script>
+    <script type="module" src="script/i18n.js"></script>
+    <script type="module" src="script/main.js"></script>
+</body>
+
+</html>
