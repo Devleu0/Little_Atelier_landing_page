@@ -154,11 +154,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ---------- 8. Immersive Gameplay Section Scroll Animation ---------- */
   const gameplaySection = document.getElementById('gameplay');
+  const navEl = document.querySelector('nav');
   if (gameplaySection) {
     const spacer = gameplaySection.querySelector('.gameplay-spacer');
-    const bg = gameplaySection.querySelector('.gameplay-background');
     const header = gameplaySection.querySelector('.section-header');
     const features = gameplaySection.querySelectorAll('.gameplay-feature');
+    const modelViewer = gameplaySection.querySelector('model-viewer, .model-viewer-container');
 
     const handleGameplayScroll = () => {
       const rect = spacer.getBoundingClientRect();
@@ -167,13 +168,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 섹션이 화면에 보이지 않으면 실행 안함
       if (top > vh || top + height < 0) {
-        if (bg.style.opacity !== '0') {
-          bg.style.opacity = 0;
+        if (header.style.opacity !== '0') {
           header.style.opacity = 0;
           features.forEach(feature => {
             feature.style.opacity = 0;
             feature.style.transform = `translateY(20px)`;
           });
+        }
+        if (navEl) {
+          navEl.style.opacity = '';
+          navEl.style.pointerEvents = '';
         }
         return;
       }
@@ -181,42 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // 스크롤 진행률 (0: 섹션 상단이 뷰포트 상단에 닿을 때, 1: 섹션 하단이 뷰포트 하단에 닿을 때)
       const progress = Math.max(0, Math.min(1, -top / (height - vh)));
 
-      // 1. 배경(영상) 애니메이션
-      // 0% -> 35% : 사각형(clip) 리빌로 등장 — "스크롤 시작 부분"이므로 rectangular fade-in 유지.
-      //             단, 스크롤이 시작되기 전(progress 0)에도 영상이 옅게 보이도록 시작값을 0이 아닌 기본값으로 둔다.
-      // 80% -> 100% : 평범한 fade-out (사각형 축소 없이 opacity만 감소)
-      const fadeInEnd = 0.5;
-      const fadeOutStart = 0.8;
-      const PRE_BG_OPACITY = 0.28; // 스크롤 시작 전 이미 보이는 기본 불투명도
-      const PRE_BG_INSET = 32;     // 스크롤 시작 전 사각형 클립 상태(%)
-
-      let currentOpacity = PRE_BG_OPACITY;
-      let currentInset = PRE_BG_INSET;
-
-      if (progress > fadeInEnd && progress < fadeOutStart) {
-        // 중간의 안정된 상태
-        currentOpacity = 1;
-        currentInset = 0;
-      } else if (progress <= fadeInEnd) {
-        // 인트로 애니메이션 (Ease-out Cubic) — 사각형 리빌 유지 + 이미 옅게 보이는 상태에서 시작
-        const localProgress = progress / fadeInEnd;
-        const easedProgress = 1 - Math.pow(1 - localProgress, 3);
-        currentOpacity = PRE_BG_OPACITY + (1 - PRE_BG_OPACITY) * easedProgress;
-        currentInset = PRE_BG_INSET * (1 - easedProgress);
-      } else if (progress >= fadeOutStart) {
-        // 아우트로 애니메이션 (Ease-in-out Cubic) — 평범한 fade-out (사각형 없음)
-        const localProgress = (progress - fadeOutStart) / (1 - fadeOutStart);
-        const easedProgress = localProgress < 0.5
-          ? 4 * localProgress * localProgress * localProgress
-          : 1 - Math.pow(-2 * localProgress + 2, 3) / 2;
-        currentOpacity = 1 - easedProgress;
-        currentInset = 0;
-      }
-
-      bg.style.opacity = Math.max(0, Math.min(1, currentOpacity));
-      bg.style.clipPath = `inset(${currentInset}% ${currentInset}% ${currentInset}% ${currentInset}%)`;
-
-      // 2. 헤더 페이드 인/아웃
+      // 1. 헤더 페이드 인/아웃
       // 20% -> 35% : 페이드 인
       // 80% -> 90% : 페이드 아웃
       if (progress >= 0.20 && progress <= 0.35) {
@@ -227,6 +196,42 @@ document.addEventListener('DOMContentLoaded', () => {
         header.style.opacity = 1 - (progress - 0.8) / 0.1;
       } else if (progress > 0.9 || progress < 0.20) {
         header.style.opacity = 0;
+      }
+
+      // 2. 상단 nav 페이드 아웃/인 — panorama가 풀스크린으로 보이는 구간(25%~80%)에는
+      //    고정 nav가 화면 위쪽을 가려 "잘려 보이는" 문제를 막기 위해 nav를 숨긴다.
+      if (navEl) {
+        let navOpacity = 1;
+        if (progress >= 0.20 && progress <= 0.30) {
+          navOpacity = 1 - (progress - 0.20) / 0.10;
+        } else if (progress > 0.30 && progress < 0.85) {
+          navOpacity = 0;
+        } else if (progress >= 0.85 && progress <= 0.95) {
+          navOpacity = (progress - 0.85) / 0.10;
+        } else {
+          navOpacity = 1;
+        }
+        navEl.style.opacity = navOpacity;
+        navEl.style.pointerEvents = navOpacity < 0.05 ? 'none' : '';
+      }
+
+      // 3. 3D Model Viewer 페이드 연동 (25% -> 45% 페이드인 / 80% -> 95% 페이드아웃)
+      if (modelViewer) {
+        if (progress >= 0.25 && progress <= 0.45) {
+          const opacity = (progress - 0.25) / 0.20;
+          modelViewer.style.opacity = opacity;
+          modelViewer.style.transform = `translateY(${20 * (1 - opacity)}px)`;
+        } else if (progress > 0.45 && progress < 0.80) {
+          modelViewer.style.opacity = 1;
+          modelViewer.style.transform = `translateY(0px)`;
+        } else if (progress >= 0.80 && progress <= 0.95) {
+          const opacity = 1 - (progress - 0.80) / 0.15;
+          modelViewer.style.opacity = opacity;
+          modelViewer.style.transform = `translateY(${20 * (1 - opacity)}px)`;
+        } else {
+          modelViewer.style.opacity = 0;
+          modelViewer.style.transform = `translateY(20px)`;
+        }
       }
 
       // 3. 피처 아이템 순차적 애니메이션 — 카드 간 전환이므로 평범한 opacity fade만 사용 (사각형 클립 없음)
@@ -404,5 +409,75 @@ document.addEventListener('DOMContentLoaded', () => {
     syncExperienceImageHeight();
     window.addEventListener('resize', syncExperienceImageHeight);
     window.addEventListener('load', syncExperienceImageHeight);
+  }
+
+  /* ---------- 10. 360도 공방 panorama + 작업대 hotspot(3D 책상 모델) ---------- */
+  const panoramaEl = document.getElementById('panorama');
+  const deskModal = document.getElementById('deskModelModal');
+
+  if (panoramaEl && typeof pannellum !== 'undefined') {
+    const viewer = pannellum.viewer('panorama', {
+      type: 'equirectangular',
+      panorama: 'images/church_meeting_room.jpg',
+      autoLoad: true,
+      autoRotate: -2,
+      compass: false,
+      showZoomCtrl: true,
+      showFullscreenCtrl: true,
+      mouseZoom: false, // 휠을 줌으로 가로채지 않도록 비활성화 → 스크롤이 항상 페이지 스크롤로 전달됨
+      hotSpots: [
+        {
+          pitch: -20,
+          yaw: 100,
+          type: 'custom',
+          cssClass: 'desk-hotspot',
+          createTooltipFunc: (hotSpotDiv) => {
+            hotSpotDiv.classList.add('desk-hotspot-marker');
+            hotSpotDiv.innerHTML =
+              '<span class="material-icons desk-hotspot-icon">chair</span>' +
+              '<span class="desk-hotspot-pulse"></span>' +
+              '<span class="desk-hotspot-label">완성된 책상 보기</span>';
+            hotSpotDiv.addEventListener('click', (e) => {
+              e.stopPropagation();
+              openDeskModal();
+            });
+          }
+        }
+      ]
+    });
+
+    // pannellum이 초기화 시점에 컨테이너 높이를 잘못 계산해 캔버스 상단이
+    // 잘려 보이는 경우를 방지하기 위해, 로드/리사이즈 시 강제로 재계산한다.
+    const resizePanorama = () => {
+      if (viewer && typeof viewer.resize === 'function') viewer.resize();
+    };
+    window.addEventListener('load', resizePanorama);
+    window.addEventListener('resize', resizePanorama);
+    if (typeof ResizeObserver !== 'undefined') {
+      new ResizeObserver(resizePanorama).observe(panoramaEl);
+    }
+    setTimeout(resizePanorama, 300);
+  }
+
+  function openDeskModal() {
+    if (!deskModal) return;
+    deskModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDeskModal() {
+    if (!deskModal) return;
+    deskModal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  if (deskModal) {
+    deskModal.querySelector('.model-modal-close')?.addEventListener('click', closeDeskModal);
+    deskModal.addEventListener('click', (e) => {
+      if (e.target === deskModal) closeDeskModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && deskModal.classList.contains('active')) closeDeskModal();
+    });
   }
 });
