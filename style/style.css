@@ -389,41 +389,78 @@ nav a.active::after {
     justify-content: center;
     align-items: center;
     perspective: 1500px;
-    /* 원근감 강화 */
 }
 
+/* 모니터 전체 (화면+목+받침대 일체형 3D 호버) */
 .monitor-viewer {
-    width: 90%;
+    width: 100%;
     position: relative;
-    background: #1a1a1a;
-    border-radius: 30px;
-    padding: 10px;
-    border: 2px solid #444;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
-    /* 3D 기울기 효과 */
-    transform: rotateY(-20deg) rotateX(10deg) translateZ(50px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: rotateY(-15deg) rotateX(8deg) translateZ(30px);
     transform-style: preserve-3d;
     transition: transform 0.5s ease;
 }
 
 .monitor-viewer:hover {
-    transform: rotateY(-15deg) rotateX(5deg) translateZ(80px);
+    transform: rotateY(-5deg) rotateX(2deg) translateZ(50px);
 }
 
+/* 모니터 화면 프레임 */
 .hmd-visor-main {
-    background: #000;
-    border-radius: 20px;
-    overflow: hidden;
-    border: 1px solid #555;
-    transform: translateZ(10px);
+    width: 100%;
+    background: #1c1d21;
+    border-radius: 10px 10px 14px 14px;
+    padding: 10px 10px 22px 10px;
+    border: 1px solid #38393e;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    position: relative;
 }
 
+/* 화면 이미지 */
 .monitor-viewer img {
     display: block;
     width: 100%;
-    border-radius: 25px;
-    mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
-    /* 렌즈 왜곡 효과 */
+    height: auto;
+    border-radius: 4px;
+    mask-image: none;
+    filter: contrast(1.02) brightness(0.98);
+}
+
+/* 하단 베젤 전원 LED */
+.hmd-visor-main::after {
+    content: '';
+    position: absolute;
+    bottom: 8px;
+    right: 20px;
+    width: 5px;
+    height: 5px;
+    background: var(--primary, #d9822b);
+    border-radius: 50%;
+    box-shadow: 0 0 6px var(--primary, #d9822b);
+}
+
+/* 모니터 목 */
+.monitor-neck {
+    width: 44px;
+    height: 32px;
+    background: linear-gradient(180deg, #28292d 0%, #151618 100%);
+    border-left: 1px solid #38393e;
+    border-right: 1px solid #38393e;
+    margin-top: -2px;
+    z-index: -1;
+}
+
+/* 모니터 받침대 */
+.monitor-base {
+    width: 190px;
+    height: 12px;
+    background: linear-gradient(180deg, #2d2e33 0%, #1a1b1e 100%);
+    border-radius: 6px;
+    border: 1px solid #38393e;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6);
+    margin-top: -2px;
 }
 
 :is(.cta-primary, .cta-secondary) {
@@ -1752,9 +1789,9 @@ footer {
 }
 
 .gt_selector:hover {
-    background: rgba(217, 130, 43, 0.15) !important;
+    background: var(--dark) !important;
     border-color: var(--primary) !important;
-    color: var(--dark-light) !important;
+    color: var(--text) !important;
 }
 
 /* ===== ANIMATIONS ===== */
