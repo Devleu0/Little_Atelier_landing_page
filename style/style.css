@@ -16,6 +16,7 @@
     --dark-light: #f1e4cd;
     --text: #3a2a1d;
     --text-sub: #7a6753;
+    --text-light: #f1ae77;
 
     /* 폰트 */
     --font-display: 'Black Han Sans', -apple-system, sans-serif;
@@ -584,7 +585,7 @@ nav a.active::after {
 /* ===== SPOTLIGHT STORY BAND (SCROLL-TRIGGERED FADE-UP) ===== */
 .spotlight-band {
     position: relative;
-    background: linear-gradient(180deg, #090a0e 0%, #0d0f16 50%, #090a0e 100%);
+    background: linear-gradient(180deg, var(--dark) 0%, var(--dark) 50%, var(--dark) 100%);
     border-top: 1px solid rgba(217, 130, 43, 0.12);
     border-bottom: 1px solid rgba(217, 130, 43, 0.12);
 }
@@ -614,7 +615,7 @@ nav a.active::after {
     width: 560px;
     height: 320px;
     transform: translate(-50%, -50%);
-    background: radial-gradient(ellipse at center, color-mix(in srgb, var(--primary) 16%, transparent) 0%, rgba(217, 130, 43, 0) 70%);
+    background: radial-gradient(ellipse at center, color-mix(in srgb, var(--primary) 16%, transparent) 0%, var(--dark) 70%);
     filter: blur(20px);
     pointer-events: none;
 }
@@ -699,7 +700,7 @@ nav a.active::after {
 }
 
 .spotlight-slide .spotlight-text {
-    color: var(--text);
+    color: var(--text-light);
     font-weight: 500;
     font-size: clamp(1.05rem, 2vw, 1.5rem);
     letter-spacing: 0.2px;
@@ -802,6 +803,8 @@ nav a.active::after {
     justify-content: center;
     gap: 12px;
     margin-bottom: -90px;
+    margin-left: auto;
+    margin-right: auto;
     z-index: 5;
 }
 
@@ -1021,27 +1024,6 @@ nav a.active::after {
 }
 
 /* --- Bottom: controls + caption card --- */
-.vision-controls {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    max-width: 860px;
-    margin: 0 auto;
-    width: 100%;
-    align-items: stretch;
-}
-
-.vision-controls-left {
-    background: rgba(58, 42, 29, 0.04);
-    border: 1px solid rgba(58, 42, 29, 0.1);
-    border-radius: 12px;
-    padding: 20px 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    justify-content: center;
-}
-
 .vision-peek-btn {
     background: rgba(217, 130, 43, 0.08);
     border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
@@ -1088,6 +1070,9 @@ nav a.active::after {
 }
 
 .vision-viewer-caption {
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto;
     background: rgba(58, 42, 29, 0.04);
     border: 1px solid rgba(58, 42, 29, 0.1);
     border-radius: 12px;
