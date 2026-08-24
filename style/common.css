@@ -19,16 +19,17 @@
 }
 
 :root {
-    --primary: #f59e0b;
-    --secondary: #d97706;
-    --accent: #0d9488;
-    --success: #10b981;
-    --warning: #f59e0b;
-    --error: #ef4444;
-    --dark: #08090c;
-    --dark-light: #14141f;
-    --text: #ffffff;
-    --text-sub: #c1c7d0;
+    /* 목공방 컨셉 팔레트 — 원목/오렌지 오일스테인 톤의 따뜻한 라이트 테마 (style.css와 동일) */
+    --primary: #d9822b;
+    --secondary: #b5651d;
+    --accent: #7a8f5c;
+    --success: #4c8c5c;
+    --warning: #d9822b;
+    --error: #c0483a;
+    --dark: #faf3e6;
+    --dark-light: #f1e4cd;
+    --text: #3a2a1d;
+    --text-sub: #7a6753;
 
     /* 폰트 */
     --font-display: 'Black Han Sans', -apple-system, sans-serif;
@@ -191,8 +192,8 @@ textarea:focus-visible,
 }
 
 .cta-secondary {
-    color: var(--primary);
-    background: #000;
+    color: var(--secondary);
+    background: transparent;
     border: 2px solid var(--primary);
 
     &:hover {
@@ -203,8 +204,8 @@ textarea:focus-visible,
 
 /* ===== GTRANSLATE 셀렉터 ===== */
 .gt_selector {
-    background: rgba(0, 217, 255, 0.08) !important;
-    border: 1px solid rgba(0, 217, 255, 0.35) !important;
+    background: rgba(217, 130, 43, 0.08) !important;
+    border: 1px solid rgba(217, 130, 43, 0.35) !important;
     color: var(--text-sub) !important;
     border-radius: 15px;
     padding: 4px 8px;
@@ -215,7 +216,7 @@ textarea:focus-visible,
 }
 
 .gt_selector:hover {
-    background: rgba(0, 217, 255, 0.15) !important;
+    background: rgba(217, 130, 43, 0.15) !important;
     border-color: var(--primary) !important;
     color: var(--dark-light) !important;
 }
