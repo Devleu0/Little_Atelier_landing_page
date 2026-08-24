@@ -425,5 +425,61 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', syncExperienceImageHeight);
     window.addEventListener('load', syncExperienceImageHeight);
   }
-});
 
+  /* ---------- 10. 360도 공방 panorama + 작업대 hotspot(3D 책상 모델) ---------- */
+  const panoramaEl = document.getElementById('panorama');
+  const deskModal = document.getElementById('deskModelModal');
+
+  if (panoramaEl && typeof pannellum !== 'undefined') {
+    const viewer = pannellum.viewer('panorama', {
+      type: 'equirectangular',
+      panorama: 'images/church_meeting_room.jpg', // 목공방 360도 이미지 (제작 필요)
+      autoLoad: true,
+      autoRotate: -2,
+      compass: false,
+      showZoomCtrl: true,
+      showFullscreenCtrl: true,
+      hotSpots: [
+        {
+          pitch: -20,
+          yaw: 100,
+          type: 'custom',
+          cssClass: 'desk-hotspot',
+          createTooltipFunc: (hotSpotDiv) => {
+            hotSpotDiv.classList.add('desk-hotspot-marker');
+            hotSpotDiv.innerHTML =
+              '<span class="material-icons desk-hotspot-icon">chair</span>' +
+              '<span class="desk-hotspot-pulse"></span>' +
+              '<span class="desk-hotspot-label">완성된 책상 보기</span>';
+            hotSpotDiv.addEventListener('click', (e) => {
+              e.stopPropagation();
+              openDeskModal();
+            });
+          }
+        }
+      ]
+    });
+  }
+
+  function openDeskModal() {
+    if (!deskModal) return;
+    deskModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDeskModal() {
+    if (!deskModal) return;
+    deskModal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  if (deskModal) {
+    deskModal.querySelector('.model-modal-close')?.addEventListener('click', closeDeskModal);
+    deskModal.addEventListener('click', (e) => {
+      if (e.target === deskModal) closeDeskModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && deskModal.classList.contains('active')) closeDeskModal();
+    });
+  }
+});

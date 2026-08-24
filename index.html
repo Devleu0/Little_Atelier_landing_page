@@ -159,18 +159,34 @@
                     <div class="model-viewer-container">
                         <div class="model-viewer-header">
                             <span class="material-icons">3d_rotation</span>
-                            <span>3D 미리보기</span>
+                            <span>공방 360˚ 둘러보기</span>
                         </div>
-                        <div id="panorama" style="width: 100%; height: 500px;"></div>
 
-                        <model-viewer src="models/Desk by CMHT Oculus.glb" alt="완성된 3D 가구 모델" ar auto-rotate
-                            camera-controls touch-action="pan-y" min-camera-orbit="auto 0deg auto"
-                            max-camera-orbit="auto 88deg auto" shadow-intensity="1.2" exposure="0.95" loading="lazy">
-                        </model-viewer>
+                        <div id="panorama" style="width: 100%; height: 500px;"></div>
 
                         <div class="model-viewer-footer">
                             <span class="material-icons">touch_app</span>
-                            <span>드래그하여 회전 | 마우스 휠로 확대/축소</span>
+                            <span>드래그하여 공방 둘러보기 | 작업대의 책상 아이콘을 클릭해보세요</span>
+                        </div>
+                    </div>
+
+                    <!-- 360도 공방 안 작업대 위치에서 클릭 시 열리는 3D 모델 모달 -->
+                    <div class="model-modal" id="deskModelModal">
+                        <div class="model-modal-content">
+                            <button class="model-modal-close" aria-label="닫기">&times;</button>
+                            <div class="model-modal-header">
+                                <span class="material-icons">chair</span>
+                                <span>완성된 책상 모델</span>
+                            </div>
+                            <model-viewer id="deskModelViewer" src="models/Desk by CMHT Oculus.glb" alt="완성된 3D 가구 모델"
+                                ar auto-rotate camera-controls touch-action="pan-y" min-camera-orbit="auto 0deg auto"
+                                max-camera-orbit="auto 88deg auto" shadow-intensity="1.2" exposure="0.95"
+                                loading="lazy">
+                            </model-viewer>
+                            <div class="model-modal-footer">
+                                <span class="material-icons">touch_app</span>
+                                <span>드래그하여 회전 | 마우스 휠로 확대/축소</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -327,14 +343,5 @@
     <script type="module" src="script/i18n.js"></script>
     <script type="module" src="script/main.js"></script>
 </body>
-<script>
-    pannellum.viewer('panorama', {
-        "type": "equirectangular",
-        "panorama": "images/church_meeting_room.jpg", // 1단계에서 렌더링한 이미지 파일
-        "autoLoad": true,                          // 페이지 로드 시 바로 시작
-        "autoRotate": -2,                          // 자동 회전 속도 (선택)
-        "compass": true                            // 나침반 표시 (선택)
-    });
-</script>
 
 </html>
