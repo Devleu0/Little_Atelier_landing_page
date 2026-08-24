@@ -16,6 +16,7 @@
     --dark-light: #f1e4cd;
     --text: #3a2a1d;
     --text-sub: #7a6753;
+    --text-light: #f1ae77;
 
     /* 폰트 */
     --font-display: 'Black Han Sans', -apple-system, sans-serif;
@@ -391,7 +392,7 @@ nav a.active::after {
     /* 원근감 강화 */
 }
 
-.vr-hmd-viewer {
+.monitor-viewer {
     width: 90%;
     position: relative;
     background: #1a1a1a;
@@ -405,30 +406,8 @@ nav a.active::after {
     transition: transform 0.5s ease;
 }
 
-.vr-hmd-viewer:hover {
+.monitor-viewer:hover {
     transform: rotateY(-15deg) rotateX(5deg) translateZ(80px);
-}
-
-/* 추가된 3D 구조 요소 */
-.hmd-top-plate {
-    position: absolute;
-    top: -20px;
-    left: 10px;
-    right: 10px;
-    height: 20px;
-    background: #333;
-    transform: rotateX(60deg);
-    border-radius: 5px 5px 0 0;
-}
-
-.hmd-side-panel {
-    position: absolute;
-    right: -15px;
-    top: 10px;
-    bottom: 10px;
-    width: 15px;
-    background: #222;
-    transform: rotateY(60deg);
 }
 
 .hmd-visor-main {
@@ -439,52 +418,13 @@ nav a.active::after {
     transform: translateZ(10px);
 }
 
-.vr-hmd-viewer img {
+.monitor-viewer img {
     display: block;
     width: 100%;
     border-radius: 25px;
     mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
     /* 렌즈 왜곡 효과 */
 }
-
-/* HMD 내부 광원 및 디테일 */
-.hmd-visor-flare {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 50% 50%, rgba(217, 130, 43, 0.1) 0%, transparent 70%);
-    pointer-events: none;
-}
-
-.hmd-lens-effect {
-    position: absolute;
-    inset: 0;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='rgba(217, 130, 43,0.05)' stroke-width='2'/%3E%3C/svg%3E");
-    opacity: 0.3;
-}
-
-.hmd-ui-overlay {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--primary);
-    background: rgba(0, 0, 0, 0.6);
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.7rem;
-    font-family: var(--font-display);
-    letter-spacing: 1px;
-}
-
-.hmd-ui-overlay .material-icons {
-    font-size: 1rem;
-}
-
 
 :is(.cta-primary, .cta-secondary) {
     position: relative;
@@ -584,7 +524,7 @@ nav a.active::after {
 /* ===== SPOTLIGHT STORY BAND (SCROLL-TRIGGERED FADE-UP) ===== */
 .spotlight-band {
     position: relative;
-    background: linear-gradient(180deg, #090a0e 0%, #0d0f16 50%, #090a0e 100%);
+    background: linear-gradient(180deg, var(--dark) 0%, var(--dark) 50%, var(--dark) 100%);
     border-top: 1px solid rgba(217, 130, 43, 0.12);
     border-bottom: 1px solid rgba(217, 130, 43, 0.12);
 }
@@ -614,7 +554,7 @@ nav a.active::after {
     width: 560px;
     height: 320px;
     transform: translate(-50%, -50%);
-    background: radial-gradient(ellipse at center, color-mix(in srgb, var(--primary) 16%, transparent) 0%, rgba(217, 130, 43, 0) 70%);
+    background: radial-gradient(ellipse at center, color-mix(in srgb, var(--primary) 16%, transparent) 0%, var(--dark) 70%);
     filter: blur(20px);
     pointer-events: none;
 }
@@ -699,7 +639,7 @@ nav a.active::after {
 }
 
 .spotlight-slide .spotlight-text {
-    color: var(--text);
+    color: var(--text-light);
     font-weight: 500;
     font-size: clamp(1.05rem, 2vw, 1.5rem);
     letter-spacing: 0.2px;
@@ -779,7 +719,7 @@ nav a.active::after {
 
 .section-subtitle {
     font-size: 1.1rem;
-    color: var(--text-sub);
+    color: var(--text-light);
     border-radius: 5dvh;
     margin: 0 2vh;
 }
@@ -802,6 +742,8 @@ nav a.active::after {
     justify-content: center;
     gap: 12px;
     margin-bottom: -90px;
+    margin-left: auto;
+    margin-right: auto;
     z-index: 5;
 }
 
@@ -1021,27 +963,6 @@ nav a.active::after {
 }
 
 /* --- Bottom: controls + caption card --- */
-.vision-controls {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    max-width: 860px;
-    margin: 0 auto;
-    width: 100%;
-    align-items: stretch;
-}
-
-.vision-controls-left {
-    background: rgba(58, 42, 29, 0.04);
-    border: 1px solid rgba(58, 42, 29, 0.1);
-    border-radius: 12px;
-    padding: 20px 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    justify-content: center;
-}
-
 .vision-peek-btn {
     background: rgba(217, 130, 43, 0.08);
     border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
@@ -1088,6 +1009,9 @@ nav a.active::after {
 }
 
 .vision-viewer-caption {
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto;
     background: rgba(58, 42, 29, 0.04);
     border: 1px solid rgba(58, 42, 29, 0.1);
     border-radius: 12px;
@@ -1244,11 +1168,6 @@ nav a.active::after {
     font-size: 0.95rem;
     font-weight: 600;
     margin-bottom: 8px;
-}
-
-.feature-item-desc {
-    font-size: 0.85rem;
-    color: var(--text-sub);
 }
 
 .experience-image {
@@ -1431,7 +1350,7 @@ nav a.active::after {
 
 .gameplay-feature .feature-item-desc {
     font-size: 0.9rem;
-    color: var(--text-sub);
+    color: var(--text-light);
 }
 
 
