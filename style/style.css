@@ -392,7 +392,7 @@ nav a.active::after {
     /* 원근감 강화 */
 }
 
-.vr-hmd-viewer {
+.monitor-viewer {
     width: 90%;
     position: relative;
     background: #1a1a1a;
@@ -406,30 +406,8 @@ nav a.active::after {
     transition: transform 0.5s ease;
 }
 
-.vr-hmd-viewer:hover {
+.monitor-viewer:hover {
     transform: rotateY(-15deg) rotateX(5deg) translateZ(80px);
-}
-
-/* 추가된 3D 구조 요소 */
-.hmd-top-plate {
-    position: absolute;
-    top: -20px;
-    left: 10px;
-    right: 10px;
-    height: 20px;
-    background: #333;
-    transform: rotateX(60deg);
-    border-radius: 5px 5px 0 0;
-}
-
-.hmd-side-panel {
-    position: absolute;
-    right: -15px;
-    top: 10px;
-    bottom: 10px;
-    width: 15px;
-    background: #222;
-    transform: rotateY(60deg);
 }
 
 .hmd-visor-main {
@@ -440,52 +418,13 @@ nav a.active::after {
     transform: translateZ(10px);
 }
 
-.vr-hmd-viewer img {
+.monitor-viewer img {
     display: block;
     width: 100%;
     border-radius: 25px;
     mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
     /* 렌즈 왜곡 효과 */
 }
-
-/* HMD 내부 광원 및 디테일 */
-.hmd-visor-flare {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 50% 50%, rgba(217, 130, 43, 0.1) 0%, transparent 70%);
-    pointer-events: none;
-}
-
-.hmd-lens-effect {
-    position: absolute;
-    inset: 0;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='rgba(217, 130, 43,0.05)' stroke-width='2'/%3E%3C/svg%3E");
-    opacity: 0.3;
-}
-
-.hmd-ui-overlay {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--primary);
-    background: rgba(0, 0, 0, 0.6);
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.7rem;
-    font-family: var(--font-display);
-    letter-spacing: 1px;
-}
-
-.hmd-ui-overlay .material-icons {
-    font-size: 1rem;
-}
-
 
 :is(.cta-primary, .cta-secondary) {
     position: relative;
