@@ -780,7 +780,7 @@ nav a.active::after {
 
 .section-subtitle {
     font-size: 1.1rem;
-    color: var(--text-sub);
+    color: var(--text-light);
     border-radius: 5dvh;
     margin: 0 2vh;
 }
@@ -1231,11 +1231,6 @@ nav a.active::after {
     margin-bottom: 8px;
 }
 
-.feature-item-desc {
-    font-size: 0.85rem;
-    color: var(--text-sub);
-}
-
 .experience-image {
     position: relative;
     border-radius: 12px;
@@ -1416,7 +1411,7 @@ nav a.active::after {
 
 .gameplay-feature .feature-item-desc {
     font-size: 0.9rem;
-    color: var(--text-sub);
+    color: var(--text-light);
 }
 
 
