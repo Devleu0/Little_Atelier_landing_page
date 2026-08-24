@@ -38,3 +38,4 @@
 ---
 
 Desk by CMHT Oculus [CC-BY] via Poly Pizza
+church_meeting_room [CC0] via Dario Barresi
