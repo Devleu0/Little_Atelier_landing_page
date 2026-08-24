@@ -27,7 +27,7 @@
         <ul>
             <li><a href="#vision" class="nav-main" data-i18n="nav.vision">제작 과정</a></li>
             <li><a href="#gameplay" class="nav-main" data-i18n="nav.gameplay">게임플레이</a></li>
-            <li><a href="#dev" class="nav-main" data-i18n="nav.dev">개발 이야기</a></li>
+            <li><a href="#dev" class="nav-main" data-i18n="nav.dev">시스템 설계</a></li>
             <li><a href="#contact" class="nav-main" data-i18n="nav.contact">체험</a></li>
         </ul>
         <div class="gtranslate_wrapper"></div>
@@ -56,8 +56,8 @@
                 <div class="hero-stats">
                     <div class="hero-stat">
                         <span class="material-icons stat-icon">handyman</span>
-                        <strong class="stat-number" data-i18n="stats.visionTypes">4단계 제작</strong>
-                        <span data-i18n="stats.visionTypesLabel">조립·페인팅·사포질·완성</span>
+                        <strong class="stat-number" data-i18n="stats.visionTypes">3단계 제작</strong>
+                        <span data-i18n="stats.visionTypesLabel">조립·페인팅·사포질</span>
                     </div>
                     <div class="hero-stat">
                         <span class="material-icons stat-icon">mouse</span>
@@ -146,61 +146,6 @@
         </div>
     </section>
 
-    <section id="vision" class="section section-dark">
-        <div class="container">
-            <div class="section-header reveal">
-                <h2 class="section-title" data-i18n-html="vision.sectionTitle">5단계로 완성하는 <span>나만의 가구</span></h2>
-            </div>
-
-            <div class="vision-layout reveal">
-                <div class="vision-tabs">
-                    <button class="vision-tab active" data-key="materials">
-                        <span class="vision-tab-thumb"><img src="images/stage-materials.jpg" alt="재료 준비"
-                                data-i18n-alt="vision.materials.title"></span>
-                        <span class="vision-tab-name" data-i18n="vision.materials.title">재료 준비</span>
-                    </button>
-                    <button class="vision-tab" data-key="assembling">
-                        <span class="vision-tab-thumb"><img src="images/stage-assembling.jpg" alt="조립"
-                                data-i18n-alt="vision.assembling.title"></span>
-                        <span class="vision-tab-name" data-i18n="vision.assembling.title">조립</span>
-                    </button>
-                    <button class="vision-tab" data-key="painting">
-                        <span class="vision-tab-thumb"><img src="images/stage-painting.jpg" alt="페인팅"
-                                data-i18n-alt="vision.painting.title"></span>
-                        <span class="vision-tab-name" data-i18n="vision.painting.title">페인팅</span>
-                    </button>
-                    <button class="vision-tab" data-key="sanding">
-                        <span class="vision-tab-thumb"><img src="images/stage-sanding.jpg" alt="사포질"
-                                data-i18n-alt="vision.sanding.title"></span>
-                        <span class="vision-tab-name" data-i18n="vision.sanding.title">사포질</span>
-                    </button>
-                    <button class="vision-tab" data-key="complete">
-                        <span class="vision-tab-thumb"><img src="images/stage-complete.jpg" alt="완성"
-                                data-i18n-alt="vision.complete.title"></span>
-                        <span class="vision-tab-name" data-i18n="vision.complete.title">완성</span>
-                    </button>
-                </div>
-
-                <div class="vision-compare" id="visionCompare" style="--split:50">
-
-                    <div class="vision-compare-media">
-                        <img src="images/stage-materials.jpg" alt="이전 단계" class="vision-img vision-img-normal"
-                            data-i18n-alt="alt.visionPreview">
-
-                        <div class="vision-effect-layer">
-                            <img src="images/stage-materials.jpg" alt="현재 단계" class="vision-img vision-img-effect"
-                                data-i18n-alt="alt.visionPreview">
-                        </div>
-                    </div>
-                </div>
-                <div class="vision-viewer-caption">
-                    <div class="vision-viewer-title" data-i18n="vision.materials.title">재료 준비</div>
-                    <p class="vision-viewer-desc" data-i18n="vision.viewerIntroDesc">다리, 상판, 나사까지. 가구가 되기 전 모든
-                        재료를 한눈에 확인하고 제작을 시작합니다.</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <section id="gameplay" class="section">
         <div class="gameplay-spacer">
@@ -212,23 +157,6 @@
                     <div class="section-header">
                         <h2 class="section-title" data-i18n-html="gameplay.title">몰입형 <span>제작 경험</span></h2>
                         <p class="section-subtitle" data-i18n="gameplay.subtitle">마우스 하나로 완성하는 나만의 가구</p>
-                    </div>
-                    <div class="gameplay-feature" id="feature-1">
-                        <div class="feature-item-icon"><span class="material-icons">drag_indicator</span></div>
-                        <div class="feature-item-title" data-i18n="gameplay.feature1.title">직관적인 조작</div>
-                        <div class="feature-item-desc" data-i18n="gameplay.feature1.desc">아이템을 드래그해 원하는 위치에 배치하고 조립
-                        </div>
-                    </div>
-                    <div class="gameplay-feature" id="feature-2">
-                        <div class="feature-item-icon"><span class="material-icons">format_paint</span></div>
-                        <div class="feature-item-title" data-i18n="gameplay.feature2.title">색상과 광택 연출</div>
-                        <div class="feature-item-desc" data-i18n="gameplay.feature2.desc">머티리얼 속성 제어로 색상과 광택을 실시간 수정
-                        </div>
-                    </div>
-                    <div class="gameplay-feature" id="feature-3">
-                        <div class="feature-item-icon"><span class="material-icons">auto_awesome</span></div>
-                        <div class="feature-item-title" data-i18n="gameplay.feature3.title">완성의 성취감</div>
-                        <div class="feature-item-desc" data-i18n="gameplay.feature3.desc">카메라 회전과 특수 효과로 완성 순간을 연출</div>
                     </div>
                 </div>
             </div>
@@ -252,7 +180,7 @@
                         <img src="images/dev-statemachine.jpg" alt="상태 머신 흐름도" data-i18n-alt="dev.card1.imgAlt">
                     </div>
                     <div class="dev-card-body">
-                        <h4 data-i18n="dev.card1.title">명확한 제작 흐름 관리</h4>
+                        <h4 data-i18n="dev.card1.title">현실적인 작업 과정</h4>
                         <p data-i18n="dev.card1.desc">'조립 → 페인팅 → 사포질 → 완성'의 작업 과정을 현실적으로 반영했습니다..</p>
                     </div>
                 </div>
@@ -265,8 +193,8 @@
                         <img src="images/dev-material.jpg" alt="머티리얼 실시간 제어" data-i18n-alt="dev.card2.imgAlt">
                     </div>
                     <div class="dev-card-body">
-                        <h4 data-i18n="dev.card2.title">색상·광택 제어</h4>
-                        <p data-i18n="dev.card2.desc">PBR 기술을 적용해 페인팅 색상 변경과 광택을 현실적으로 적용했습니다.</p>
+                        <h4 data-i18n="dev.card2.title">커스터마이징</h4>
+                        <p data-i18n="dev.card2.desc">PBR 기술을 적용해 페인팅 색상 변경과 광택을 현실적으로 수정해서 나만의 물건을 제작할 수 있습니다.</p>
                     </div>
                 </div>
                 <div class="dev-card reveal">
@@ -278,7 +206,7 @@
                         <img src="images/dev-3dmodel.jpg" alt="3D 모델링 및 UV 작업" data-i18n-alt="dev.card3.imgAlt">
                     </div>
                     <div class="dev-card-body">
-                        <h4 data-i18n="dev.card3.title">직접 제작한 3D 가구 모델</h4>
+                        <h4 data-i18n="dev.card3.title">고품질 3D 가구 모델</h4>
                         <p data-i18n="dev.card3.desc">모델을 직접 제작해서 책상과 의자 등을 만드는 과정을 현실적으로 구성했습니다. </p>
                     </div>
                 </div>
@@ -329,7 +257,7 @@
                     <ul class="footer-links-list">
                         <li><a href="#vision" data-i18n="footer.linkVision">제작 과정</a></li>
                         <li><a href="#gameplay" data-i18n="nav.gameplay">게임플레이</a></li>
-                        <li><a href="#dev" data-i18n="nav.dev">개발 이야기</a></li>
+                        <li><a href="#dev" data-i18n="nav.dev">시스템 설계</a></li>
                     </ul>
                 </div>
 

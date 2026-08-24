@@ -119,43 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ---------- 5. Craft stage before/after viewer ---------- */
-  // 한국어 원문(fallback). 일본어는 ja.json의 vision.<key>.title / vision.<key>.desc 를 사용한다.
-  const visionDataKo = {
-    materials: {
-      title: '재료 준비',
-      desc: '다리, 상판, 나사까지 — 가구가 되기 전 모든 재료를 한눈에 확인하고 제작을 시작합니다. 필요한 부품을 미리 살펴보면 다음 단계가 훨씬 수월해집니다.',
-      img: 'images/stage-materials.jpg',
-      prevImg: 'images/stage-materials.jpg'
-    },
-    assembling: {
-      title: '조립',
-      desc: '아이템을 드래그해 정해진 위치에 배치하고 조립합니다. 상태 머신으로 관리되는 조립 과정 덕분에 부품이 하나씩 맞물리는 손맛을 그대로 느낄 수 있습니다.',
-      img: 'images/stage-assembling.jpg',
-      prevImg: 'images/stage-materials.jpg'
-    },
-    painting: {
-      title: '페인팅',
-      desc: '색상 선택 및 오브젝트 드래그 인터랙션을 통해 원하는 색으로 칠합니다. 머티리얼 속성을 실시간으로 조절해 광택(Smoothness)까지 세밀하게 표현할 수 있습니다.',
-      img: 'images/stage-painting.jpg',
-      prevImg: 'images/stage-assembling.jpg'
-    },
-    sanding: {
-      title: '사포질',
-      desc: '거친 표면을 문질러 매끈하게 다듬는 사포질 단계입니다. 현재 거칠기를 눈으로 확인하며 표면이 부드럽게 변하는 과정을 직접 체감할 수 있습니다.',
-      img: 'images/stage-sanding.jpg',
-      prevImg: 'images/stage-painting.jpg'
-    },
-    complete: {
-      title: '완성',
-      desc: '아이템 완성 시 카메라 회전과 특수 효과(VFX) 연출로 완성의 순간을 만끽합니다. 내 손으로 완성한 가구를 여러 각도에서 감상해보세요.',
-      img: 'images/stage-complete.jpg',
-      prevImg: 'images/stage-sanding.jpg'
-    }
-  };
-
-
-
   /* ---------- 6. Hero CTA buttons scroll to gameplay ---------- */
   document.querySelectorAll('.cta-primary, .cta-secondary').forEach(btn => {
     if (!btn.dataset.target) return;
