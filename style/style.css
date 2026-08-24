@@ -653,10 +653,6 @@ nav a.active::after {
 .model-modal-content {
     position: relative;
     width: min(560px, 90vw);
-    background:
-        linear-gradient(135deg, rgba(20, 14, 8, 0.72) 0%, rgba(20, 14, 8, 0.55) 100%),
-        url('images/gameplay-bg.jpg') center/cover no-repeat;
-    border: 1px solid rgba(217, 130, 43, 0.25);
     border-radius: 16px;
     box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4);
     overflow: hidden;
