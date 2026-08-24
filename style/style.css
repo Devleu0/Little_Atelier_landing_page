@@ -408,7 +408,7 @@ nav a.active::after {
 }
 
 /* 모니터 화면 프레임 */
-.hmd-visor-main {
+.monitor-main {
     width: 100%;
     background: #1c1d21;
     border-radius: 10px 10px 14px 14px;
@@ -429,7 +429,7 @@ nav a.active::after {
 }
 
 /* 하단 베젤 전원 LED */
-.hmd-visor-main::after {
+.monitor-main::after {
     content: '';
     position: absolute;
     bottom: 8px;
