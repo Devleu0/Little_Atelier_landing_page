@@ -19,8 +19,8 @@
     "explore": "制作工程を見る"
   },
   "stats": {
-    "visionTypes": "4段階の制作",
-    "visionTypesLabel": "組み立て・ペイント・やすりがけ・完成",
+    "visionTypes": "3段階制作",
+    "visionTypesLabel": "組み立て|ペイント|やすりがけ",
     "audio": "マウス操作",
     "audioLabel": "ドラッグ&クリックで操作",
     "pov": "机・椅子",
