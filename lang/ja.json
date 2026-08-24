@@ -47,7 +47,13 @@
   },
   "gameplay": {
     "title": "没入感あふれる<span>クラフト体験</span>",
-    "subtitle": "マウスひとつの簡単操作で作りあげる自分だけの家具"
+    "subtitle": "マウスひとつの簡単操作で作りあげる自分だけの家具",
+    "panoramaTitle": "工房を360˚見渡す",
+    "panoramaHint": "ドラッグして工房を見渡す｜作業台のアイコンをクリックしてみてください",
+    "modalTitle": "完成したデスクのモデル",
+    "modalHint": "ドラッグして回転｜マウスホイールで拡大・縮小",
+    "modelAlt": "完成した3D家具モデル",
+    "hotspotLabel": "完成したデスクを見る"
   },
   "dev": {
     "sectionTitle": "システム<span>設計</span>",

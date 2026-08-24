@@ -1020,7 +1020,14 @@ nav a.active::after {
 
 .section-subtitle {
     font-size: 1.1rem;
-    color: var(--text-light);
+    color: var(--text);
+    border-radius: 5dvh;
+    margin: 0 2vh;
+}
+
+.section-subtitle {
+    font-size: 1.1rem;
+    color: var(--text);
     border-radius: 5dvh;
     margin: 0 2vh;
 }
