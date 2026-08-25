@@ -24,6 +24,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  /* ---------- 0-1. Spotlight(#vision) 섹션: 첫 카드가 완전히 보이는 지점으로 스크롤 이동 ----------
+     #vision은 position:sticky 컨테이너 내부 요소라 문서상 "정적 위치"가 스크럽 구간의
+     맨 처음(progress 0, 첫 카드가 아직 옅게만 보이는 지점)으로 계산된다.
+     네이티브 해시 이동에 맡기면 위에서 내려올 때는 자연스럽게 이어져 보이지만,
+     아래에서 거슬러 올라올 때는 그 "설익은" 지점에 그대로 멈춰 마치 동작하지 않는 것처럼
+     보이므로, gameplay와 동일하게 JS로 가로채 안정 구간으로 이동시킨다. */
+  const scrollToVisionReveal = () => {
+    const spacer = document.querySelector('.spotlight-spacer');
+    if (!spacer) {
+      document.getElementById('vision')?.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    const vh = window.innerHeight;
+    const spacerHeight = spacer.offsetHeight;
+    const spacerTop = spacer.getBoundingClientRect().top + window.scrollY;
+    // handleSpotlightScroll의 zone 계산과 동일한 기준 (slide 0의 안정 구간 중앙).
+    // style.css의 .snap-step 첫 번째 마커(0.125)와 같은 지점.
+    const targetProgress = 0.125;
+    const targetY = spacerTop + targetProgress * (spacerHeight - vh);
+    window.scrollTo({ top: targetY, behavior: 'smooth' });
+  };
+
+  document.querySelectorAll('a[href="#vision"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      scrollToVisionReveal();
+    });
+  });
+
   /* ---------- 1. Mobile nav toggle ---------- */
   const navToggle = document.querySelector('.nav-toggle');
   const navMenu = document.querySelector('nav ul');
@@ -125,6 +154,10 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', (e) => {
       if (btn.dataset.target === '#gameplay') {
         scrollToGameplayReveal();
+        return;
+      }
+      if (btn.dataset.target === '#vision') {
+        scrollToVisionReveal();
         return;
       }
       document.querySelector(btn.dataset.target)?.scrollIntoView({ behavior: 'smooth' });
@@ -481,3 +514,151 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+/* ---------- 8. Immersive gamevideo Section Scroll Animation ---------- */
+const gamevideoSection = document.getElementById('gamevideo');
+if (gamevideoSection) {
+  const spacer = gamevideoSection.querySelector('.gamevideo-spacer');
+  const bg = gamevideoSection.querySelector('.gamevideo-background');
+  const header = gamevideoSection.querySelector('.section-header');
+  const gvStage = gamevideoSection.querySelector('.gv-stage');
+
+  const handleGamevideoScroll = () => {
+    const rect = spacer.getBoundingClientRect();
+    const { top, height } = rect;
+    const vh = window.innerHeight;
+
+    // 섹션이 화면에 보이지 않으면 실행 안함
+    if (top > vh || top + height < 0) {
+      if (bg.style.opacity !== '0') {
+        bg.style.opacity = 0;
+        if (header) header.style.opacity = 0;
+      }
+      return;
+    }
+
+    // 스크롤 진행률 (0: 섹션 상단이 뷰포트 상단에 닿을 때, 1: 섹션 하단이 뷰포트 하단에 닿을 때)
+    const progress = Math.max(0, Math.min(1, -top / (height - vh)));
+
+    // 1. 배경(영상) 애니메이션
+    // 0% -> 35% : 사각형(clip) 리빌로 등장 — "스크롤 시작 부분"이므로 rectangular fade-in 유지.
+    //             단, 스크롤이 시작되기 전(progress 0)에도 영상이 옅게 보이도록 시작값을 0이 아닌 기본값으로 둔다.
+    // 80% -> 100% : 평범한 fade-out (사각형 축소 없이 opacity만 감소)
+    const fadeInEnd = 0.5;
+    const fadeOutStart = 0.8;
+    const PRE_BG_OPACITY = 0.28; // 스크롤 시작 전 이미 보이는 기본 불투명도
+    const PRE_BG_INSET = 32;     // 스크롤 시작 전 사각형 클립 상태(%)
+
+    let currentOpacity = PRE_BG_OPACITY;
+    let currentInset = PRE_BG_INSET;
+
+    if (progress > fadeInEnd && progress < fadeOutStart) {
+      // 중간의 안정된 상태
+      currentOpacity = 1;
+      currentInset = 0;
+    } else if (progress <= fadeInEnd) {
+      // 인트로 애니메이션 (Ease-out Cubic) — 사각형 리빌 유지 + 이미 옅게 보이는 상태에서 시작
+      const localProgress = progress / fadeInEnd;
+      const easedProgress = 1 - Math.pow(1 - localProgress, 3);
+      currentOpacity = PRE_BG_OPACITY + (1 - PRE_BG_OPACITY) * easedProgress;
+      currentInset = PRE_BG_INSET * (1 - easedProgress);
+    } else if (progress >= fadeOutStart) {
+      // 아우트로 애니메이션 (Ease-in-out Cubic) — 평범한 fade-out (사각형 없음)
+      const localProgress = (progress - fadeOutStart) / (1 - fadeOutStart);
+      const easedProgress = localProgress < 0.5
+        ? 4 * localProgress * localProgress * localProgress
+        : 1 - Math.pow(-2 * localProgress + 2, 3) / 2;
+      currentOpacity = 1 - easedProgress;
+      currentInset = 0;
+    }
+
+    bg.style.opacity = Math.max(0, Math.min(1, currentOpacity));
+    bg.style.clipPath = `inset(${currentInset}% ${currentInset}% ${currentInset}% ${currentInset}%)`;
+
+    // 3. 파티클 레이어 스크롤 시차용 값 — 안정 구간 중심(0.65)을 기준으로
+    //    -1~1 근방 값을 만들어 --scroll-shift로 흘려보낸다. .gv-particle-layer의
+    //    --depth와 곱해져 레이어별로 다른 속도의 세로 이동을 만든다.
+    if (gvStage) {
+      const scrollShift = Math.max(-1, Math.min(1, (progress - 0.65) / 0.35));
+      gvStage.style.setProperty('--scroll-shift', scrollShift.toFixed(3));
+    }
+
+    // 4. 헤더 페이드 인/아웃
+    // 20% -> 35% : 페이드 인
+    // 80% -> 90% : 페이드 아웃
+    if (header) {
+      if (progress >= 0.20 && progress <= 0.35) {
+        header.style.opacity = (progress - 0.20) / 0.15;
+      } else if (progress > 0.35 && progress < 0.8) {
+        header.style.opacity = 1;
+      } else if (progress >= 0.8 && progress <= 0.9) {
+        header.style.opacity = 1 - (progress - 0.8) / 0.1;
+      } else if (progress > 0.9 || progress < 0.20) {
+        header.style.opacity = 0;
+      }
+    }
+  };
+
+  window.addEventListener('scroll', handleGamevideoScroll, { passive: true });
+  handleGamevideoScroll(); // 초기 로드 시 한 번 실행
+
+  /* ---------- 8-1. 비디오 3D 틸트 + 파티클(톱밥) 패럴랙스 레이어 ---------- */
+  if (gvStage) {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // 레이어별로 톱밥 파티클을 랜덤 생성 (far → 작고 흐릿, near → 크고 선명)
+    const particleConfigs = [
+      { selector: '.gv-particle-layer--far', count: 16, size: [2, 4], blur: 2.5 },
+      { selector: '.gv-particle-layer--mid', count: 12, size: [3, 6], blur: 1.2 },
+      { selector: '.gv-particle-layer--near', count: 8, size: [5, 10], blur: 0 },
+    ];
+    particleConfigs.forEach(cfg => {
+      const layer = gvStage.querySelector(cfg.selector);
+      if (!layer) return;
+      for (let i = 0; i < cfg.count; i++) {
+        const dot = document.createElement('span');
+        dot.className = 'gv-particle';
+        const size = cfg.size[0] + Math.random() * (cfg.size[1] - cfg.size[0]);
+        dot.style.width = `${size}px`;
+        dot.style.height = `${size}px`;
+        dot.style.left = `${Math.random() * 100}%`;
+        dot.style.top = `${Math.random() * 100}%`;
+        if (cfg.blur) dot.style.filter = `blur(${cfg.blur}px)`;
+        if (!reduceMotion) {
+          dot.style.animationDuration = `${8 + Math.random() * 10}s`;
+          dot.style.animationDelay = `-${Math.random() * 12}s`;
+        }
+        layer.appendChild(dot);
+      }
+    });
+
+    if (!reduceMotion) {
+      // 마우스 위치를 바로 반영하지 않고 lerp로 이징 — 관성이 붙어 자연스럽게 따라온다
+      let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+
+      const onPointerMove = (e) => {
+        const rect = gamevideoSection.querySelector('.gamevideo-sticky-container').getBoundingClientRect();
+        const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+        const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+        targetX = Math.max(-1, Math.min(1, nx));
+        targetY = Math.max(-1, Math.min(1, ny));
+      };
+      const resetTilt = () => { targetX = 0; targetY = 0; };
+
+      const tick = () => {
+        currentX += (targetX - currentX) * 0.06;
+        currentY += (targetY - currentY) * 0.06;
+        gvStage.style.setProperty('--tilt-x', currentX.toFixed(4));
+        gvStage.style.setProperty('--tilt-y', currentY.toFixed(4));
+        requestAnimationFrame(tick);
+      };
+      tick();
+
+      const stickyContainer = gamevideoSection.querySelector('.gamevideo-sticky-container');
+      if (stickyContainer) {
+        stickyContainer.addEventListener('mousemove', onPointerMove);
+        stickyContainer.addEventListener('mouseleave', resetTilt);
+      }
+    }
+  }
+}

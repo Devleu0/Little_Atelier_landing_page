@@ -15,6 +15,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
+    <link rel="preload" href="images/video.mp4" as="video" type="video/mp4">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
     <script>
         if (/Mobi|Android/i.test(navigator.userAgent)) {
@@ -89,6 +90,26 @@
         </div>
     </section>
 
+
+    <section id="gamevideo" class="section">
+        <div class="gamevideo-spacer">
+            <div class="gamevideo-sticky-container">
+                <div class="gamevideo-background">
+                    <div class="gv-stage">
+                        <div class="gv-particle-layer gv-particle-layer--far" data-depth="0.12" aria-hidden="true">
+                        </div>
+                        <div class="gv-particle-layer gv-particle-layer--mid" data-depth="0.28" aria-hidden="true">
+                        </div>
+                        <video class="gv-video-layer" src="images/video.mp4" autoplay loop muted playsinline></video>
+                        <div class="gv-particle-layer gv-particle-layer--near" data-depth="0.55" aria-hidden="true">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="snap-step" aria-hidden="true"></div>
+        </div>
+    </section>
+
     <section id="spotlight" class="spotlight-band" aria-label="공방 이야기">
         <div class="spotlight-spacer">
             <div class="spotlight-sticky">
@@ -141,6 +162,12 @@
                     <button class="spotlight-dot" data-index="3" aria-label="4"></button>
                 </div>
             </div>
+            <!-- .spotlight-spacer의 직계 자식이어야 top:calc()가 spacer 높이 기준으로 계산됨
+                 (.spotlight-sticky는 position:sticky라 그 안에 넣으면 기준점이 어긋난다) -->
+            <div class="snap-step" aria-hidden="true"></div>
+            <div class="snap-step" aria-hidden="true"></div>
+            <div class="snap-step" aria-hidden="true"></div>
+            <div class="snap-step" aria-hidden="true"></div>
         </div>
     </section>
 
@@ -156,38 +183,40 @@
                     <div class="model-viewer-container">
                         <div class="model-viewer-header">
                             <span class="material-icons">3d_rotation</span>
-                            <span>공방 360˚ 둘러보기</span>
+                            <span data-i18n="gameplay.panoramaTitle">공방 360˚ 둘러보기</span>
                         </div>
 
                         <div id="panorama"></div>
 
                         <div class="model-viewer-footer">
                             <span class="material-icons">touch_app</span>
-                            <span>드래그하여 공방 둘러보기 | 작업대의 책상 아이콘을 클릭해보세요</span>
+                            <span data-i18n="gameplay.panoramaHint">드래그하여 공방 둘러보기 | 작업대의 책상 아이콘을 클릭해보세요</span>
                         </div>
                     </div>
 
                     <!-- 360도 공방 안 작업대 위치에서 클릭 시 열리는 3D 모델 모달 -->
                     <div class="model-modal" id="deskModelModal">
                         <div class="model-modal-content">
-                            <button class="model-modal-close" aria-label="닫기">&times;</button>
+                            <button class="model-modal-close" aria-label="닫기"
+                                data-i18n-aria-label="alt.close">&times;</button>
                             <div class="model-modal-header">
                                 <span class="material-icons">chair</span>
-                                <span>완성된 책상 모델</span>
+                                <span data-i18n="gameplay.modalTitle">완성된 책상 모델</span>
                             </div>
                             <model-viewer id="deskModelViewer" src="models/Desk by CMHT Oculus.glb" alt="완성된 3D 가구 모델"
-                                ar auto-rotate camera-controls touch-action="pan-y" min-camera-orbit="auto 0deg auto"
-                                max-camera-orbit="auto 88deg auto" shadow-intensity="1.2" exposure="0.95"
-                                loading="lazy">
+                                data-i18n-alt="gameplay.modelAlt" ar auto-rotate camera-controls touch-action="pan-y"
+                                min-camera-orbit="auto 0deg auto" max-camera-orbit="auto 88deg auto"
+                                shadow-intensity="1.2" exposure="0.95" loading="lazy">
                             </model-viewer>
                             <div class="model-modal-footer">
                                 <span class="material-icons">touch_app</span>
-                                <span>드래그하여 회전 | 마우스 휠로 확대/축소</span>
+                                <span data-i18n="gameplay.modalHint">드래그하여 회전 | 마우스 휠로 확대/축소</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="snap-step" aria-hidden="true"></div>
         </div>
     </section>
 
