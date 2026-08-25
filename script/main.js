@@ -451,7 +451,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (panoramaEl && typeof pannellum !== 'undefined') {
     const viewer = pannellum.viewer('panorama', {
       type: 'equirectangular',
-      panorama: 'images/church_meeting_room.jpg',
+      panorama: 'images/thatch_chapel.jpg',
       autoLoad: true,
       autoRotate: -2,
       compass: false,
@@ -461,7 +461,7 @@ document.addEventListener('DOMContentLoaded', () => {
       hotSpots: [
         {
           pitch: -20,
-          yaw: 100,
+          yaw: 31,
           type: 'custom',
           cssClass: 'desk-hotspot',
           createTooltipFunc: (hotSpotDiv) => {
