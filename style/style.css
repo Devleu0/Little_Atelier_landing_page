@@ -35,6 +35,11 @@
 
 html {
     scroll-behavior: smooth;
+    /* proximity: 스크롤이 멈췄을 때 근처 스냅 지점에 "자연스럽게" 붙는 정도.
+       mandatory를 쓰면 gamevideo/spotlight/gameplay처럼 JS가 스크롤 진행률로
+       페이드를 스크러빙하는 긴 구간에서도 강제로 스냅해버려 애니메이션이
+       중간에 끊기므로 절대 사용하지 않는다. */
+    scroll-snap-type: y proximity;
 }
 
 body {
@@ -259,6 +264,10 @@ nav a.active::after {
     flex-direction: column;
     padding-top: 70px;
     overflow: hidden;
+    /* 정적인 한-화면 섹션이므로 스냅 대상. gamevideo/spotlight/gameplay처럼
+       내부에서 스크롤 진행률을 스크러빙하는 구간은 의도적으로 제외한다. */
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
 }
 
 .hero-grid {
@@ -992,6 +1001,17 @@ nav a.active::after {
 
 .section-dark {
     background: var(--dark);
+}
+
+/* 스냅 스코프: 정적인 단일-화면 섹션에만 스냅을 건다.
+   #gamevideo, #spotlight, #gameplay는 spacer+sticky로 긴 스크롤 구간에서
+   opacity/clip-path를 스크러빙하므로 여기 포함시키지 않는다 — 포함시키면
+   proximity 스냅이라도 스크럽 도중 스냅 지점 쪽으로 슬쩍 당기려는 힘이 생겨
+   페이드 타이밍이 어긋난다. */
+#dev,
+.cta-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
 }
 
 .section-dark-light {
