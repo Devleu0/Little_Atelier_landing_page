@@ -31,8 +31,7 @@
 ├── models/          # 3D 가구 모델 (.glb)
 ├── script/          # 인터랙션 및 다국어 지원 스크립트 (main.js, i18n.js)
 ├── style/           # 스타일시트
-├── index.html       # 메인 랜딩 페이지 (PC)
-└── mobile.html      # 모바일 분기 페이지
+└── index.html       # 메인 랜딩 페이지 (PC)
 ```
 
 ---
@@ -40,4 +39,6 @@
 ## Credits
 
 - Desk by CMHT Oculus [CC-BY] via Poly Pizza
+- Table [CC0] via Quaternius
 - church_meeting_room [CC0] via Dario Barresi
+- thatch_chapel [CC0] via Dimitrios Savva and Jarod Guest

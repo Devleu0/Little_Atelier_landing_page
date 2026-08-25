@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const spacerHeight = spacer.offsetHeight;
     const spacerTop = spacer.getBoundingClientRect().top + window.scrollY;
     // handleGameplayScroll의 progress 계산과 동일한 기준.
-    // progress 0.4 지점 = 배경/헤더 페이드인이 끝나고 첫 feature가 보이기 시작하는 안정 구간
-    const targetProgress = 0.4;
+    // progress 0.7 지점 = 배경/헤더 페이드인이 끝나고 첫 feature가 보이기 시작하는 안정 구간
+    const targetProgress = 0.7;
     const targetY = spacerTop + targetProgress * (spacerHeight - vh);
     window.scrollTo({ top: targetY, behavior: 'smooth' });
   };
@@ -451,7 +451,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (panoramaEl && typeof pannellum !== 'undefined') {
     const viewer = pannellum.viewer('panorama', {
       type: 'equirectangular',
-      panorama: 'images/church_meeting_room.jpg',
+      panorama: 'images/thatch_chapel.jpg',
       autoLoad: true,
       autoRotate: -2,
       compass: false,
@@ -461,7 +461,7 @@ document.addEventListener('DOMContentLoaded', () => {
       hotSpots: [
         {
           pitch: -20,
-          yaw: 100,
+          yaw: 31,
           type: 'custom',
           cssClass: 'desk-hotspot',
           createTooltipFunc: (hotSpotDiv) => {
