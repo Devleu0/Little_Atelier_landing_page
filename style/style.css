@@ -1025,11 +1025,11 @@ nav a.active::after {
     margin: 0 2vh;
 }
 
-.section-subtitle {
-    font-size: 1.1rem;
-    color: var(--text);
-    border-radius: 5dvh;
-    margin: 0 2vh;
+.gameplay-spacer .section-header .section-subtitle {
+    color: var(--dark-light);
+    background: color-mix(in srgb, black 40%, transparent);
+    padding: 0 2vh;
+    border-radius: 1.5vh;
 }
 
 /* ===== VISION INTERACTIVE VIEWER ===== */
