@@ -95,7 +95,15 @@
         <div class="gamevideo-spacer">
             <div class="gamevideo-sticky-container">
                 <div class="gamevideo-background">
-                    <video src="images/video.mp4" autoplay loop muted playsinline></video>
+                    <div class="gv-stage">
+                        <div class="gv-particle-layer gv-particle-layer--far" data-depth="0.12" aria-hidden="true">
+                        </div>
+                        <div class="gv-particle-layer gv-particle-layer--mid" data-depth="0.28" aria-hidden="true">
+                        </div>
+                        <video class="gv-video-layer" src="images/video.mp4" autoplay loop muted playsinline></video>
+                        <div class="gv-particle-layer gv-particle-layer--near" data-depth="0.55" aria-hidden="true">
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="snap-step" aria-hidden="true"></div>
