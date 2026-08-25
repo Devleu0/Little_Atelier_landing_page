@@ -481,3 +481,84 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+/* ---------- 8. Immersive gamevideo Section Scroll Animation ---------- */
+const gamevideoSection = document.getElementById('gamevideo');
+if (gamevideoSection) {
+  const spacer = gamevideoSection.querySelector('.gamevideo-spacer');
+  const bg = gamevideoSection.querySelector('.gamevideo-background');
+  const header = gamevideoSection.querySelector('.section-header');
+
+  const handleGamevideoScroll = () => {
+    const rect = spacer.getBoundingClientRect();
+    const { top, height } = rect;
+    const vh = window.innerHeight;
+
+    // 섹션이 화면에 보이지 않으면 실행 안함
+    if (top > vh || top + height < 0) {
+      if (bg.style.opacity !== '0') {
+        bg.style.opacity = 0;
+        header.style.opacity = 0;
+        features.forEach(feature => {
+          feature.style.opacity = 0;
+          feature.style.transform = `translateY(20px)`;
+        });
+      }
+      return;
+    }
+
+    // 스크롤 진행률 (0: 섹션 상단이 뷰포트 상단에 닿을 때, 1: 섹션 하단이 뷰포트 하단에 닿을 때)
+    const progress = Math.max(0, Math.min(1, -top / (height - vh)));
+
+    // 1. 배경(영상) 애니메이션
+    // 0% -> 35% : 사각형(clip) 리빌로 등장 — "스크롤 시작 부분"이므로 rectangular fade-in 유지.
+    //             단, 스크롤이 시작되기 전(progress 0)에도 영상이 옅게 보이도록 시작값을 0이 아닌 기본값으로 둔다.
+    // 80% -> 100% : 평범한 fade-out (사각형 축소 없이 opacity만 감소)
+    const fadeInEnd = 0.5;
+    const fadeOutStart = 0.8;
+    const PRE_BG_OPACITY = 0.28; // 스크롤 시작 전 이미 보이는 기본 불투명도
+    const PRE_BG_INSET = 32;     // 스크롤 시작 전 사각형 클립 상태(%)
+
+    let currentOpacity = PRE_BG_OPACITY;
+    let currentInset = PRE_BG_INSET;
+
+    if (progress > fadeInEnd && progress < fadeOutStart) {
+      // 중간의 안정된 상태
+      currentOpacity = 1;
+      currentInset = 0;
+    } else if (progress <= fadeInEnd) {
+      // 인트로 애니메이션 (Ease-out Cubic) — 사각형 리빌 유지 + 이미 옅게 보이는 상태에서 시작
+      const localProgress = progress / fadeInEnd;
+      const easedProgress = 1 - Math.pow(1 - localProgress, 3);
+      currentOpacity = PRE_BG_OPACITY + (1 - PRE_BG_OPACITY) * easedProgress;
+      currentInset = PRE_BG_INSET * (1 - easedProgress);
+    } else if (progress >= fadeOutStart) {
+      // 아우트로 애니메이션 (Ease-in-out Cubic) — 평범한 fade-out (사각형 없음)
+      const localProgress = (progress - fadeOutStart) / (1 - fadeOutStart);
+      const easedProgress = localProgress < 0.5
+        ? 4 * localProgress * localProgress * localProgress
+        : 1 - Math.pow(-2 * localProgress + 2, 3) / 2;
+      currentOpacity = 1 - easedProgress;
+      currentInset = 0;
+    }
+
+    bg.style.opacity = Math.max(0, Math.min(1, currentOpacity));
+    bg.style.clipPath = `inset(${currentInset}% ${currentInset}% ${currentInset}% ${currentInset}%)`;
+
+    // 2. 헤더 페이드 인/아웃
+    // 20% -> 35% : 페이드 인
+    // 80% -> 90% : 페이드 아웃
+    if (progress >= 0.20 && progress <= 0.35) {
+      header.style.opacity = (progress - 0.20) / 0.15;
+    } else if (progress > 0.35 && progress < 0.8) {
+      header.style.opacity = 1;
+    } else if (progress >= 0.8 && progress <= 0.9) {
+      header.style.opacity = 1 - (progress - 0.8) / 0.1;
+    } else if (progress > 0.9 || progress < 0.20) {
+      header.style.opacity = 0;
+    }
+  };
+
+  window.addEventListener('scroll', handleGamevideoScroll, { passive: true });
+  handleGamevideoScroll(); // 초기 로드 시 한 번 실행
+}

@@ -1508,59 +1508,6 @@ nav a.active::after {
     filter: brightness(1);
 }
 
-/* ===== GAMEPLAY SECTION (기존) ===== */
-/*
-.gameplay-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-}
-
-.gameplay-image {
-    order: 2;
-    position: relative;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 30px 60px rgba(217, 130, 43, 0.2);
-}
-
-.gameplay-image::after {
-    content: '▶';
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.4);
-    color: white;
-    font-size: 48px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    cursor: pointer;
-}
-
-.gameplay-image:hover::after {
-    opacity: 1;
-}
-
-.gameplay-image img {
-    width: 100%;
-    display: block;
-}
-
-.gameplay-text h3 {
-    margin-bottom: 30px;
-    line-height: 1.2;
-}
-
-.gameplay-text p {
-    font-size: 1.05rem;
-    color: var(--text-sub);
-    margin-bottom: 25px;
-}
-*/
-
 /* ===== GAMEPLAY SECTION (몰입형) ===== */
 #gameplay.section {
     padding: 0;
@@ -1643,6 +1590,25 @@ nav a.active::after {
     color: var(--text-light);
 }
 
+/* ===== gamevideo SECTION ===== */
+#gamevideo.section {
+    padding: 0;
+    background: var(--dark);
+}
+
+.gamevideo-spacer {
+    height: 400vh;
+    /* 스크롤 애니메이션을 위한 충분한 높이 확보 */
+    position: relative;
+}
+
+.gamevideo-sticky-container {
+    position: sticky;
+    top: 60px;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
 
 
 /* ===== DEV / BEHIND-THE-SCENES SECTION ===== */
