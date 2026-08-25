@@ -521,6 +521,7 @@ if (gamevideoSection) {
   const spacer = gamevideoSection.querySelector('.gamevideo-spacer');
   const bg = gamevideoSection.querySelector('.gamevideo-background');
   const header = gamevideoSection.querySelector('.section-header');
+  const gvStage = gamevideoSection.querySelector('.gv-stage');
 
   const handleGamevideoScroll = () => {
     const rect = spacer.getBoundingClientRect();
@@ -531,11 +532,7 @@ if (gamevideoSection) {
     if (top > vh || top + height < 0) {
       if (bg.style.opacity !== '0') {
         bg.style.opacity = 0;
-        header.style.opacity = 0;
-        features.forEach(feature => {
-          feature.style.opacity = 0;
-          feature.style.transform = `translateY(20px)`;
-        });
+        if (header) header.style.opacity = 0;
       }
       return;
     }
@@ -578,20 +575,90 @@ if (gamevideoSection) {
     bg.style.opacity = Math.max(0, Math.min(1, currentOpacity));
     bg.style.clipPath = `inset(${currentInset}% ${currentInset}% ${currentInset}% ${currentInset}%)`;
 
-    // 2. 헤더 페이드 인/아웃
+    // 3. 파티클 레이어 스크롤 시차용 값 — 안정 구간 중심(0.65)을 기준으로
+    //    -1~1 근방 값을 만들어 --scroll-shift로 흘려보낸다. .gv-particle-layer의
+    //    --depth와 곱해져 레이어별로 다른 속도의 세로 이동을 만든다.
+    if (gvStage) {
+      const scrollShift = Math.max(-1, Math.min(1, (progress - 0.65) / 0.35));
+      gvStage.style.setProperty('--scroll-shift', scrollShift.toFixed(3));
+    }
+
+    // 4. 헤더 페이드 인/아웃
     // 20% -> 35% : 페이드 인
     // 80% -> 90% : 페이드 아웃
-    if (progress >= 0.20 && progress <= 0.35) {
-      header.style.opacity = (progress - 0.20) / 0.15;
-    } else if (progress > 0.35 && progress < 0.8) {
-      header.style.opacity = 1;
-    } else if (progress >= 0.8 && progress <= 0.9) {
-      header.style.opacity = 1 - (progress - 0.8) / 0.1;
-    } else if (progress > 0.9 || progress < 0.20) {
-      header.style.opacity = 0;
+    if (header) {
+      if (progress >= 0.20 && progress <= 0.35) {
+        header.style.opacity = (progress - 0.20) / 0.15;
+      } else if (progress > 0.35 && progress < 0.8) {
+        header.style.opacity = 1;
+      } else if (progress >= 0.8 && progress <= 0.9) {
+        header.style.opacity = 1 - (progress - 0.8) / 0.1;
+      } else if (progress > 0.9 || progress < 0.20) {
+        header.style.opacity = 0;
+      }
     }
   };
 
   window.addEventListener('scroll', handleGamevideoScroll, { passive: true });
   handleGamevideoScroll(); // 초기 로드 시 한 번 실행
+
+  /* ---------- 8-1. 비디오 3D 틸트 + 파티클(톱밥) 패럴랙스 레이어 ---------- */
+  if (gvStage) {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // 레이어별로 톱밥 파티클을 랜덤 생성 (far → 작고 흐릿, near → 크고 선명)
+    const particleConfigs = [
+      { selector: '.gv-particle-layer--far', count: 16, size: [2, 4], blur: 2.5 },
+      { selector: '.gv-particle-layer--mid', count: 12, size: [3, 6], blur: 1.2 },
+      { selector: '.gv-particle-layer--near', count: 8, size: [5, 10], blur: 0 },
+    ];
+    particleConfigs.forEach(cfg => {
+      const layer = gvStage.querySelector(cfg.selector);
+      if (!layer) return;
+      for (let i = 0; i < cfg.count; i++) {
+        const dot = document.createElement('span');
+        dot.className = 'gv-particle';
+        const size = cfg.size[0] + Math.random() * (cfg.size[1] - cfg.size[0]);
+        dot.style.width = `${size}px`;
+        dot.style.height = `${size}px`;
+        dot.style.left = `${Math.random() * 100}%`;
+        dot.style.top = `${Math.random() * 100}%`;
+        if (cfg.blur) dot.style.filter = `blur(${cfg.blur}px)`;
+        if (!reduceMotion) {
+          dot.style.animationDuration = `${8 + Math.random() * 10}s`;
+          dot.style.animationDelay = `-${Math.random() * 12}s`;
+        }
+        layer.appendChild(dot);
+      }
+    });
+
+    if (!reduceMotion) {
+      // 마우스 위치를 바로 반영하지 않고 lerp로 이징 — 관성이 붙어 자연스럽게 따라온다
+      let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+
+      const onPointerMove = (e) => {
+        const rect = gamevideoSection.querySelector('.gamevideo-sticky-container').getBoundingClientRect();
+        const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+        const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+        targetX = Math.max(-1, Math.min(1, nx));
+        targetY = Math.max(-1, Math.min(1, ny));
+      };
+      const resetTilt = () => { targetX = 0; targetY = 0; };
+
+      const tick = () => {
+        currentX += (targetX - currentX) * 0.06;
+        currentY += (targetY - currentY) * 0.06;
+        gvStage.style.setProperty('--tilt-x', currentX.toFixed(4));
+        gvStage.style.setProperty('--tilt-y', currentY.toFixed(4));
+        requestAnimationFrame(tick);
+      };
+      tick();
+
+      const stickyContainer = gamevideoSection.querySelector('.gamevideo-sticky-container');
+      if (stickyContainer) {
+        stickyContainer.addEventListener('mousemove', onPointerMove);
+        stickyContainer.addEventListener('mouseleave', resetTilt);
+      }
+    }
+  }
 }
