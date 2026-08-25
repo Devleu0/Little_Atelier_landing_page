@@ -39,4 +39,6 @@
 ## Credits
 
 - Desk by CMHT Oculus [CC-BY] via Poly Pizza
+- Table [CC0] via Quaternius
 - church_meeting_room [CC0] via Dario Barresi
+- thatch_chapel [CC0] via Dimitrios Savva and Jarod Guest
