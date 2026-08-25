@@ -845,6 +845,61 @@ nav a.active::after {
     position: relative;
 }
 
+/* 스크럽 구간용 "단계별" 스냅 마커.
+   실제 DOM 섹션이 아니라 스크롤 진행률(progress) 위의 한 지점이므로,
+   보이지 않는 1px 마커를 spacer 안의 '안정 구간' 위치에 절대배치해서
+   그 지점에만 스냅되도록 만든다. top 값은 JS의 progress 공식
+   (progress = -top / (spacerHeight - 100vh)) 을 거꾸로 풀어서 계산한 것 —
+   즉 markerTop = progress * (spacerHeight - 100vh).
+   spacer 자체에는 스냅을 걸지 않으므로 나머지 구간은 여전히 자유 스크롤이다. */
+.snap-step {
+    position: absolute;
+    left: 0;
+    width: 1px;
+    height: 1px;
+    pointer-events: none;
+    opacity: 0;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+}
+
+/* spotlight: 4개 카드, 각 안정 구간 중앙 = i/4 + 1/8 (JS dot 클릭 타겟과 동일) */
+.spotlight-spacer .snap-step:nth-of-type(1) {
+    top: calc(0.125 * (440vh - 100vh));
+}
+
+.spotlight-spacer .snap-step:nth-of-type(2) {
+    top: calc(0.375 * (440vh - 100vh));
+}
+
+.spotlight-spacer .snap-step:nth-of-type(3) {
+    top: calc(0.625 * (440vh - 100vh));
+}
+
+.spotlight-spacer .snap-step:nth-of-type(4) {
+    top: calc(0.875 * (440vh - 100vh));
+}
+
+@media (max-width: 768px) {
+
+    /* 2248번 줄의 모바일 spotlight-spacer 높이(360vh) 오버라이드에 맞춰 재계산 */
+    .spotlight-spacer .snap-step:nth-of-type(1) {
+        top: calc(0.125 * (360vh - 100vh));
+    }
+
+    .spotlight-spacer .snap-step:nth-of-type(2) {
+        top: calc(0.375 * (360vh - 100vh));
+    }
+
+    .spotlight-spacer .snap-step:nth-of-type(3) {
+        top: calc(0.625 * (360vh - 100vh));
+    }
+
+    .spotlight-spacer .snap-step:nth-of-type(4) {
+        top: calc(0.875 * (360vh - 100vh));
+    }
+}
+
 .spotlight-sticky {
     position: sticky;
     top: 0;
@@ -1541,6 +1596,13 @@ nav a.active::after {
     position: relative;
 }
 
+/* 헤더/모델뷰어가 완전히 보이는 안정 구간 초입(progress 0.4)에 스냅 —
+   main.js의 scrollToGameplayReveal()이 쓰는 targetProgress(0.4)와 동일하게
+   맞춰서, CTA 클릭 시 이동하는 지점과 스냅 지점이 어긋나지 않도록 한다. */
+.gameplay-spacer .snap-step {
+    top: calc(0.4 * (400vh - 100vh));
+}
+
 .gameplay-sticky-container {
     position: sticky;
     top: 0;
@@ -1620,6 +1682,11 @@ nav a.active::after {
     height: 400vh;
     /* 스크롤 애니메이션을 위한 충분한 높이 확보 */
     position: relative;
+}
+
+/* 영상이 완전히 보이는 안정 구간(progress 0.5~0.8)의 중앙 지점에만 스냅 */
+.gamevideo-spacer .snap-step {
+    top: calc(0.65 * (400vh - 100vh));
 }
 
 .gamevideo-sticky-container {

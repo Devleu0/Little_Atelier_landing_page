@@ -24,6 +24,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  /* ---------- 0-1. Spotlight(#vision) 섹션: 첫 카드가 완전히 보이는 지점으로 스크롤 이동 ----------
+     #vision은 position:sticky 컨테이너 내부 요소라 문서상 "정적 위치"가 스크럽 구간의
+     맨 처음(progress 0, 첫 카드가 아직 옅게만 보이는 지점)으로 계산된다.
+     네이티브 해시 이동에 맡기면 위에서 내려올 때는 자연스럽게 이어져 보이지만,
+     아래에서 거슬러 올라올 때는 그 "설익은" 지점에 그대로 멈춰 마치 동작하지 않는 것처럼
+     보이므로, gameplay와 동일하게 JS로 가로채 안정 구간으로 이동시킨다. */
+  const scrollToVisionReveal = () => {
+    const spacer = document.querySelector('.spotlight-spacer');
+    if (!spacer) {
+      document.getElementById('vision')?.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    const vh = window.innerHeight;
+    const spacerHeight = spacer.offsetHeight;
+    const spacerTop = spacer.getBoundingClientRect().top + window.scrollY;
+    // handleSpotlightScroll의 zone 계산과 동일한 기준 (slide 0의 안정 구간 중앙).
+    // style.css의 .snap-step 첫 번째 마커(0.125)와 같은 지점.
+    const targetProgress = 0.125;
+    const targetY = spacerTop + targetProgress * (spacerHeight - vh);
+    window.scrollTo({ top: targetY, behavior: 'smooth' });
+  };
+
+  document.querySelectorAll('a[href="#vision"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      scrollToVisionReveal();
+    });
+  });
+
   /* ---------- 1. Mobile nav toggle ---------- */
   const navToggle = document.querySelector('.nav-toggle');
   const navMenu = document.querySelector('nav ul');
@@ -125,6 +154,10 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', (e) => {
       if (btn.dataset.target === '#gameplay') {
         scrollToGameplayReveal();
+        return;
+      }
+      if (btn.dataset.target === '#vision') {
+        scrollToVisionReveal();
         return;
       }
       document.querySelector(btn.dataset.target)?.scrollIntoView({ behavior: 'smooth' });

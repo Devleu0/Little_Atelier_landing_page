@@ -98,6 +98,7 @@
                     <video src="images/video.mp4" autoplay loop muted playsinline></video>
                 </div>
             </div>
+            <div class="snap-step" aria-hidden="true"></div>
         </div>
     </section>
 
@@ -153,6 +154,12 @@
                     <button class="spotlight-dot" data-index="3" aria-label="4"></button>
                 </div>
             </div>
+            <!-- .spotlight-spacer의 직계 자식이어야 top:calc()가 spacer 높이 기준으로 계산됨
+                 (.spotlight-sticky는 position:sticky라 그 안에 넣으면 기준점이 어긋난다) -->
+            <div class="snap-step" aria-hidden="true"></div>
+            <div class="snap-step" aria-hidden="true"></div>
+            <div class="snap-step" aria-hidden="true"></div>
+            <div class="snap-step" aria-hidden="true"></div>
         </div>
     </section>
 
@@ -201,6 +208,7 @@
                     </div>
                 </div>
             </div>
+            <div class="snap-step" aria-hidden="true"></div>
         </div>
     </section>
 
