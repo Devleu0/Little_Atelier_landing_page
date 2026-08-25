@@ -1650,26 +1650,11 @@ nav a.active::after {
     will-change: opacity, transform;
 }
 
-.gameplay-feature .feature-item-icon {
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(217, 130, 43, 0.1);
-    border-radius: 8px;
-    font-size: 24px;
-    color: var(--primary);
-}
-
-.gameplay-feature .feature-item-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-}
-
-.gameplay-feature .feature-item-desc {
-    font-size: 0.9rem;
-    color: var(--text-light);
+.pnlm-controls-container {
+    left: auto !important;
+    top: auto !important;
+    right: 3vh !important;
+    bottom: 13vh !important;
 }
 
 /* ===== gamevideo SECTION ===== */
