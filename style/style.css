@@ -96,6 +96,10 @@ h4 {
     font-size: clamp(1.5rem, 4vw, 2rem);
 }
 
+h4 {
+    font-weight: 500;
+}
+
 strong {
     font-weight: 300;
 }
@@ -274,10 +278,9 @@ nav a.active::after {
     position: relative;
     z-index: 2;
     display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
+    grid-template-columns: 1.2fr 0.80fr;
     align-items: end;
-    gap: 40px;
-    padding: var(--space-4xl) 40px;
+    padding: var(--space-4xl) var(--space-4xl);
 }
 
 .hero-content {
@@ -288,6 +291,7 @@ nav a.active::after {
     background: linear-gradient(135deg, rgba(250, 243, 230, 0.88) 0%, rgba(250, 243, 230, 0.6) 100%);
     backdrop-filter: blur(6px);
     box-shadow: 0 20px 60px rgba(58, 42, 29, 0.12);
+    justify-self: start;
 }
 
 .hero-badge {
@@ -303,6 +307,7 @@ nav a.active::after {
     letter-spacing: 1.5px;
     font-weight: 700;
     margin-bottom: 26px;
+    justify-self: end;
 }
 
 .hero-badge::before {
@@ -325,7 +330,6 @@ nav a.active::after {
 }
 
 .hero-content .subtitle {
-    font-size: 1.3rem;
     color: var(--primary);
     margin-bottom: 30px;
     font-weight: 500;
@@ -333,7 +337,7 @@ nav a.active::after {
 }
 
 .hero-content .catchphrase {
-    font-size: 1.6rem;
+    font-size: clamp(1.4rem, 1vh, 1.5rem);
     font-weight: 700;
     color: var(--secondary);
     letter-spacing: 3px;
@@ -1074,7 +1078,7 @@ nav a.active::after {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
 }
 
@@ -1415,42 +1419,6 @@ nav a.active::after {
 }
 
 /* ===== STATS SECTION ===== */
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-}
-
-.stat-card {
-    text-align: center;
-    position: relative;
-    padding: 36px 32px;
-    background: linear-gradient(135deg, rgba(217, 130, 43, 0.08) 0%, rgba(255, 176, 32, 0.05) 100%);
-    border: 1px solid rgba(217, 130, 43, 0.2);
-    border-radius: 12px;
-    overflow: hidden;
-    transition: all 0.4s ease;
-}
-
-.stat-card:hover {
-    border-color: var(--primary);
-    box-shadow: 0 20px 60px rgba(217, 130, 43, 0.2);
-    transform: translateY(-8px);
-}
-
-.stat-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 0% 0%, rgba(217, 130, 43, 0.15) 0%, transparent 50%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
-
-.stat-card:hover::before {
-    opacity: 1;
-}
-
 .stat-number {
     display: block;
     font-family: var(--font-display);
@@ -1461,31 +1429,6 @@ nav a.active::after {
     background-clip: text;
 }
 
-
-.stat-label {
-    font-size: 0.9rem;
-    color: var(--text-sub);
-    letter-spacing: 0.5px;
-}
-
-/* ===== EXPERIENCE SECTION ===== */
-.experience-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-}
-
-.experience-content h3 {
-    margin-bottom: 30px;
-    line-height: 1.2;
-}
-
-.experience-content p {
-    font-size: 1.05rem;
-    color: var(--text-sub);
-    margin-bottom: 25px;
-}
 
 .feature-grid {
     display: grid;
@@ -1553,35 +1496,6 @@ nav a.active::after {
     margin-bottom: 8px;
 }
 
-.experience-image {
-    position: relative;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 30px 60px rgba(217, 130, 43, 0.2);
-    align-self: end;
-}
-
-.experience-image::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(217, 130, 43, 0.2) 0%, transparent 100%);
-    pointer-events: none;
-    z-index: 1;
-}
-
-.experience-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s ease;
-    filter: brightness(0.9);
-}
-
-.experience-image:hover img {
-    transform: scale(1.05);
-    filter: brightness(1);
-}
 
 /* ===== GAMEPLAY SECTION (몰입형) ===== */
 #gameplay.section {
@@ -1894,69 +1808,6 @@ nav a.active::after {
     color: var(--text-sub);
 }
 
-/* ===== GALLERY SECTION ===== */
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: 200px;
-    gap: 16px;
-}
-
-.gallery-item:nth-child(1) {
-    grid-column: span 2;
-    grid-row: span 2;
-}
-
-.gallery-item:nth-child(2) {
-    grid-column: span 1;
-    grid-row: span 2;
-}
-
-.gallery-item:nth-child(3) {
-    grid-column: span 1;
-    grid-row: span 2;
-}
-
-.gallery-item:nth-child(4) {
-    grid-column: span 2;
-    grid-row: span 1;
-}
-
-.gallery-item {
-    position: relative;
-    border-radius: 8px;
-    overflow: hidden;
-    cursor: pointer;
-}
-
-.gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease, filter 0.5s ease;
-    filter: brightness(0.85);
-}
-
-.gallery-item:hover img {
-    transform: scale(1.1);
-    filter: brightness(1);
-}
-
-.gallery-item::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(217, 130, 43, 0.1);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-    border-radius: 8px;
-    z-index: 1;
-}
-
-.gallery-item:hover::before {
-    opacity: 1;
-}
 
 /* 라이트박스 */
 .lightbox {
@@ -2281,12 +2132,6 @@ footer {
         aspect-ratio: 3/4;
     }
 
-    .experience-grid,
-    .gameplay-content {
-        grid-template-columns: 1fr;
-        gap: 50px;
-    }
-
     .stats-grid {
         grid-template-columns: 1fr 1fr;
         max-width: 600px;
@@ -2298,10 +2143,7 @@ footer {
         grid-template-columns: 1fr;
     }
 
-    .gallery-grid {
-        grid-template-columns: repeat(3, 1fr);
-        grid-auto-rows: 160px;
-    }
+
 }
 
 @media (max-width: 768px) {
@@ -2366,17 +2208,6 @@ footer {
 
     .feature-grid {
         grid-template-columns: 1fr;
-    }
-
-    .gallery-grid {
-        grid-template-columns: repeat(2, 1fr);
-        grid-auto-rows: 140px;
-        gap: 12px;
-    }
-
-    .gallery-item {
-        grid-column: span 1 !important;
-        grid-row: span 1 !important;
     }
 
     .footer-content {
