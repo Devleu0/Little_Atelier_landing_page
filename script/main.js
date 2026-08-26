@@ -58,12 +58,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const navMenu = document.querySelector('nav ul');
   if (navToggle && navMenu) {
     navToggle.addEventListener('click', () => {
-      navMenu.classList.toggle('open');
-      navToggle.classList.toggle('active');
+      const isOpen = navMenu.classList.toggle('open');
+      navToggle.classList.toggle('active', isOpen);
+      navToggle.setAttribute('aria-expanded', String(isOpen));
     });
     navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
       navMenu.classList.remove('open');
       navToggle.classList.remove('active');
+      navToggle.setAttribute('aria-expanded', 'false');
     }));
   }
 
