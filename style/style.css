@@ -117,16 +117,24 @@ textarea:focus-visible {
     outline-offset: 2px;
 }
 
-/* 스크롤 리빌 애니메이션 */
+/* 스크롤 리빌 애니메이션
+   - translateY 거리를 줄이고(40px→26px) 약간의 scale을 더해 "묵직하게 떨어지는"
+     느낌보다 "가볍게 떠오르는" 느낌으로 다듬었다.
+   - cubic-bezier(ease-out 계열)로 초반은 빠르게, 끝은 부드럽게 멈추도록 해
+     스크롤 중 여러 카드가 연속으로 나타날 때도 산만하지 않다.
+   - transition-delay는 main.js가 같은 부모를 공유하는 reveal 요소들에
+     순서대로 부여한다(스태거). */
 .reveal {
     opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateY(26px) scale(0.98);
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
 }
 
 .reveal.in-view {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
 }
 
 /* ===== NAVIGATION ===== */
@@ -1735,6 +1743,7 @@ footer {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
+        transition-delay: 0ms !important;
     }
 }
 
