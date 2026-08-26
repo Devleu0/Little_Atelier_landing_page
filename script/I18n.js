@@ -23,7 +23,9 @@
  */
 
 const STORAGE_KEY = 'bw-lang';
-const JSON_URL = '/lang/ja.json'; // 사이트 루트 기준 절대경로
+// 사이트가 서브경로에 배포돼도 깨지지 않도록, 루트 절대경로 대신
+// 이 스크립트 파일(script/i18n.js) 위치를 기준으로 상대경로를 계산한다.
+const JSON_URL = new URL('../lang/ja.json', import.meta.url).href;
 
 const state = {
     lang: 'ko',

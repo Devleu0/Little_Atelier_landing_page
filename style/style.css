@@ -112,22 +112,29 @@ strong {
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,
-textarea:focus-visible,
-.vision-tab:focus-visible {
+textarea:focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
 }
 
-/* 스크롤 리빌 애니메이션 */
+/* 스크롤 리빌 애니메이션
+   - translateY 거리를 줄이고(40px→26px) 약간의 scale을 더해 "묵직하게 떨어지는"
+     느낌보다 "가볍게 떠오르는" 느낌으로 다듬었다.
+   - cubic-bezier(ease-out 계열)로 초반은 빠르게, 끝은 부드럽게 멈추도록 해
+     스크롤 중 여러 카드가 연속으로 나타날 때도 산만하지 않다.
+   - transition-delay는 main.js가 같은 부모를 공유하는 reveal 요소들에
+     순서대로 부여한다(스태거). */
 .reveal {
     opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateY(26px) scale(0.98);
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
 }
 
 .reveal.in-view {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
 }
 
 /* ===== NAVIGATION ===== */
@@ -163,9 +170,14 @@ nav.scrolled {
 }
 
 
+.logo {
+    transition: color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+}
+
 .logo:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-    color: #094d85;
+    color: var(--secondary);
+    transform: translateY(-1px);
 }
 
 nav ul {
@@ -284,6 +296,8 @@ nav a.active::after {
 }
 
 .hero-content {
+    display: flex;
+    flex-direction: column;
     animation: fadeInUp 1s ease-out;
     will-change: opacity, transform;
     padding: 28px 32px;
@@ -307,7 +321,13 @@ nav a.active::after {
     letter-spacing: 1.5px;
     font-weight: 700;
     margin-bottom: 26px;
-    justify-self: end;
+    align-self: flex-end;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(217, 130, 43, 0.25);
 }
 
 .hero-badge::before {
@@ -352,9 +372,10 @@ nav a.active::after {
     max-width: 560px;
 }
 
-.stat-number .hero-content .highlight {
+.hero-content .highlight {
     color: var(--primary);
     font-weight: 600;
+    position: relative;
 }
 
 .cta-row {
@@ -372,11 +393,24 @@ nav a.active::after {
     padding-top: 28px;
 }
 
+.hero-stat {
+    transition: transform 0.3s ease;
+}
+
+.hero-stat:hover {
+    transform: translateY(-4px);
+}
+
 .hero-stat .stat-icon {
     display: block;
     font-size: 1.4rem;
     color: var(--primary);
     margin-bottom: 6px;
+    transition: transform 0.3s ease;
+}
+
+.hero-stat:hover .stat-icon {
+    transform: scale(1.15) rotate(-6deg);
 }
 
 .hero-stat strong {
@@ -1111,392 +1145,6 @@ nav a.active::after {
     border-radius: 1.5vh;
 }
 
-/* ===== VISION INTERACTIVE VIEWER ===== */
-.vision-layout {
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-}
-
-/* --- Top: horizontal tab chips --- */
-.vision-tabs {
-    background: color-mix(in srgb, var(--dark-light) 70%, transparent);
-    max-width: 860px;
-    width: 100%;
-    display: flex;
-    position: relative;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: -90px;
-    margin-left: auto;
-    margin-right: auto;
-    z-index: 5;
-}
-
-.vision-tab {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: rgba(58, 42, 29, 0.04);
-    border: 1px solid rgba(58, 42, 29, 0.1);
-    padding: 8px 18px 8px 8px;
-    border-radius: 999px;
-    cursor: pointer;
-    text-align: left;
-
-    position: relative;
-    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    transform: scale(0.96);
-    opacity: 0.65;
-}
-
-.vision-tab:hover {
-    transform: scale(1);
-    opacity: 0.85;
-    background: rgba(217, 130, 43, 0.06);
-    border-color: color-mix(in srgb, var(--secondary) 6%, transparent);
-}
-
-.vision-tab.active {
-    transform: scale(1.04);
-    opacity: 1;
-    border: 2px solid var(--primary);
-    box-shadow: 0 0 20px color-mix(in srgb, var(--secondary) 35%, transparent);
-    background: color-mix(in srgb, var(--secondary) 10%, transparent);
-}
-
-.vision-tab-thumb {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    overflow: hidden;
-    flex-shrink: 0;
-    background: #111;
-}
-
-.vision-tab-thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.vision-tab-name {
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: var(--text);
-    white-space: nowrap;
-}
-
-.vision-tab.active .vision-tab-name {
-    color: var(--primary);
-}
-
-/* --- Center: split compare viewer --- */
-.vision-compare {
-    position: relative;
-    max-width: 860px;
-    margin: 0 auto;
-    width: 100%;
-}
-
-.vision-compare-media {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16/10;
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid color-mix(in srgb, var(--secondary) 30%, transparent);
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
-    background: #000;
-    user-select: none;
-}
-
-.vision-img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    pointer-events: none;
-}
-
-/* effect layer is always the FULL media size — never resized by the
-   split — so any centered mask (vignette, scotoma) stays anchored to
-   the true left-right center of the whole viewer, not the shrinking
-   right-hand pane. Only visibility is clipped by --split. */
-.vision-effect-layer {
-    position: absolute;
-    inset: 0;
-    clip-path: inset(0 0 0 calc(var(--split) * 1%));
-    transition: clip-path 0.05s linear;
-}
-
-.vision-img-effect {
-    filter: var(--vision-filter, none);
-    transition: filter 0.35s ease;
-}
-
-.vision-effect-mask {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: var(--vision-mask, none);
-    mix-blend-mode: var(--vision-mask-blend, normal);
-    transition: background 0.35s ease;
-}
-
-.vision-compare.peeking .vision-effect-layer {
-    opacity: 0;
-}
-
-.vision-side-label {
-    position: absolute;
-    bottom: 16px;
-    z-index: 3;
-    background: rgba(250, 243, 230, 0.75);
-    border: 1px solid rgba(58, 42, 29, 0.15);
-    color: var(--text-sub);
-    padding: 5px 12px;
-    border-radius: 999px;
-    font-size: 0.75rem;
-    letter-spacing: 0.5px;
-    backdrop-filter: blur(6px);
-    pointer-events: none;
-}
-
-.vision-side-label-left {
-    left: 16px;
-}
-
-.vision-side-label-right {
-    right: 16px;
-    color: var(--primary);
-    border-color: rgba(217, 130, 43, 0.35);
-}
-
-.vision-compare.peeking .vision-side-label-right {
-    opacity: 0;
-}
-
-
-
-@keyframes vision-tag-pulse {
-    0% {
-        border-color: rgba(217, 130, 43, 0.3);
-        box-shadow: 0 0 0 0 rgba(217, 130, 43, 0.5);
-    }
-
-    40% {
-        border-color: rgba(217, 130, 43, 0.9);
-        box-shadow: 0 0 0 6px rgba(217, 130, 43, 0.15);
-    }
-
-    100% {
-        border-color: rgba(217, 130, 43, 0.3);
-        box-shadow: 0 0 0 0 rgba(217, 130, 43, 0);
-    }
-}
-
-/* Divider handle — positioned purely by --split, drag updates the var */
-.vision-divider {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: calc(var(--split) * 1%);
-    width: 0;
-    z-index: 4;
-    cursor: ew-resize;
-    touch-action: none;
-}
-
-.vision-divider::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: -1px;
-    width: 2px;
-    background: rgba(255, 255, 255, 0.85);
-    box-shadow: 0 0 12px color-mix(in srgb, var(--secondary) 70%, transparent);
-}
-
-.vision-divider-handle {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--primary);
-    color: var(--dark);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 0 0 4px color-mix(in srgb, var(--secondary) 20%, transparent);
-    transition: transform 0.2s ease;
-}
-
-.vision-divider:hover .vision-divider-handle,
-.vision-divider:focus-visible .vision-divider-handle {
-    transform: translate(-50%, -50%) scale(1.1);
-}
-
-.vision-divider-handle .material-icons {
-    font-size: 20px;
-    transform: rotate(90deg);
-}
-
-/* --- Bottom: controls + caption card --- */
-.vision-peek-btn {
-    background: rgba(217, 130, 43, 0.08);
-    border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
-    color: var(--primary);
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.15s ease;
-    touch-action: none;
-}
-
-.vision-peek-btn:hover {
-    background: rgba(217, 130, 43, 0.16);
-}
-
-.vision-peek-btn:active {
-    transform: scale(0.97);
-}
-
-.vision-intensity {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.vision-intensity-label {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.85rem;
-    color: var(--text-sub);
-}
-
-.vision-intensity-value {
-    color: var(--primary);
-    font-weight: 700;
-}
-
-.vision-intensity input[type="range"] {
-    width: 100%;
-    accent-color: var(--primary);
-    cursor: pointer;
-}
-
-.vision-viewer-caption {
-    width: 100%;
-    max-width: 860px;
-    margin: 0 auto;
-    background: rgba(58, 42, 29, 0.04);
-    border: 1px solid rgba(58, 42, 29, 0.1);
-    border-radius: 12px;
-    padding: 20px 24px;
-}
-
-.vision-viewer-title {
-    font-family: var(--font-display);
-    font-size: 1.3rem;
-    color: var(--primary);
-    margin-bottom: 12px;
-    font-weight: 600;
-}
-
-.vision-viewer-desc {
-    color: var(--text-sub);
-    font-size: 0.95rem;
-}
-
-/* ===== STATS SECTION ===== */
-.stat-number {
-    display: block;
-    font-family: var(--font-display);
-    font-size: 3rem;
-    line-height: 1.2;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-
-.feature-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-top: 40px;
-}
-
-.feature-item {
-    padding: 24px;
-    background: rgba(217, 130, 43, 0.05);
-    border: 1px solid rgba(217, 130, 43, 0.15);
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.feature-item::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background: var(--primary);
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: transform 0.4s ease;
-}
-
-.feature-item:hover {
-    border-color: var(--primary);
-    box-shadow: 0 10px 30px rgba(217, 130, 43, 0.15);
-    transform: translateX(8px);
-}
-
-.feature-item:hover::before {
-    transform: scaleY(1);
-}
-
-.feature-item-icon {
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(217, 130, 43, 0.1);
-    border-radius: 8px;
-    margin-bottom: 16px;
-    font-size: 24px;
-    color: var(--primary);
-    transition: all 0.3s ease;
-}
-
-.feature-item:hover .feature-item-icon {
-    background: var(--primary);
-    color: var(--dark);
-    transform: scale(1.1);
-}
-
-.feature-item-title {
-    font-size: 0.95rem;
-    font-weight: 600;
-    margin-bottom: 8px;
-}
-
-
 /* ===== GAMEPLAY SECTION (몰입형) ===== */
 #gameplay.section {
     padding: 0;
@@ -1808,7 +1456,6 @@ nav a.active::after {
     color: var(--text-sub);
 }
 
-
 /* 라이트박스 */
 .lightbox {
     position: fixed;
@@ -2096,6 +1743,7 @@ footer {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
+        transition-delay: 0ms !important;
     }
 }
 
@@ -2120,30 +1768,9 @@ footer {
         justify-content: center;
     }
 
-    .device-frame {
-        max-width: 360px;
-    }
-
-    .vision-controls {
-        grid-template-columns: 1fr;
-    }
-
-    .vision-compare-media {
-        aspect-ratio: 3/4;
-    }
-
-    .stats-grid {
-        grid-template-columns: 1fr 1fr;
-        max-width: 600px;
-        /* 2개의 카드와 간격을 고려한 너비 */
-        margin: 0 auto;
-    }
-
     .dev-grid {
         grid-template-columns: 1fr;
     }
-
-
 }
 
 @media (max-width: 768px) {
@@ -2161,14 +1788,33 @@ footer {
         background: rgba(250, 243, 230, 0.97);
         backdrop-filter: blur(10px);
         max-height: 0;
+        opacity: 0;
         overflow-y: auto;
-        transition: max-height 0.35s ease;
+        transition: max-height 0.35s ease, opacity 0.25s ease, box-shadow 0.35s ease;
         border-bottom: 1px solid rgba(217, 130, 43, 0.15);
     }
 
     nav ul.open {
         max-height: 60vh;
+        opacity: 1;
+        box-shadow: 0 20px 40px rgba(58, 42, 29, 0.18);
     }
+
+    nav ul li {
+        opacity: 0;
+        transform: translateY(-6px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    nav ul.open li {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    nav ul.open li:nth-child(1) { transition-delay: 0.05s; }
+    nav ul.open li:nth-child(2) { transition-delay: 0.1s; }
+    nav ul.open li:nth-child(3) { transition-delay: 0.15s; }
+    nav ul.open li:nth-child(4) { transition-delay: 0.2s; }
 
     nav ul li {
         width: 100%;
@@ -2206,10 +1852,6 @@ footer {
         width: 100%;
     }
 
-    .feature-grid {
-        grid-template-columns: 1fr;
-    }
-
     .footer-content {
         flex-direction: column;
         gap: 30px;
@@ -2221,10 +1863,6 @@ footer {
 
     .sticky-cta-text span {
         display: none;
-    }
-
-    .device-frame {
-        animation: none;
     }
 
     .spotlight-spacer {
@@ -2255,13 +1893,6 @@ footer {
     .spotlight-ambient {
         width: 300px;
         height: 200px;
-    }
-
-    .stats-grid {
-        grid-template-columns: 1fr;
-        max-width: 300px;
-        /* 단일 카드와 간격을 고려한 너비 */
-        margin: 0 auto;
     }
 }
 

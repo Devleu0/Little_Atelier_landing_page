@@ -7,6 +7,21 @@
     <title data-i18n="meta.title">Little Atelier - 아늑한 힐링 목공방 가구 제작 시뮬레이션</title>
     <meta name="description" content="조립부터 페인팅, 사포질까지 직접 손으로 가구를 완성하는 아늑한 목공방 시뮬레이션 게임, Little Atelier."
         data-i18n-content="meta.description">
+    <link rel="icon" href="images/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    <link rel="canonical" href="https://littleatelier.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Little Atelier">
+    <meta property="og:title" content="Little Atelier - 아늑한 힐링 목공방 가구 제작 시뮬레이션">
+    <meta property="og:description" content="조립부터 페인팅, 사포질까지 직접 손으로 가구를 완성하는 아늑한 목공방 시뮬레이션 게임, Little Atelier.">
+    <meta property="og:image" content="images/hero-scene.jpg">
+    <meta property="og:url" content="https://littleatelier.com/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Little Atelier">
+    <meta name="twitter:description" content="조립부터 페인팅, 사포질까지 직접 손으로 가구를 완성하는 아늑한 목공방 시뮬레이션 게임, Little Atelier.">
+    <meta name="twitter:image" content="images/hero-scene.jpg">
     <link rel="preload" href="images/video.mp4" as="video" type="video/mp4">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,7 +38,7 @@
 <body>
     <nav>
         <div class="logo" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">Little Atelier</div>
-        <ul>
+        <ul id="nav-menu">
             <li><a href="#vision" class="nav-main" data-i18n="nav.vision">제작 과정</a></li>
             <li><a href="#gameplay" class="nav-main" data-i18n="nav.gameplay">게임플레이</a></li>
             <li><a href="#dev" class="nav-main" data-i18n="nav.dev">공방 둘러보기</a></li>
@@ -31,7 +46,7 @@
         </ul>
         <div class="gtranslate_wrapper"></div>
 
-        <button class="nav-toggle" aria-label="메뉴 열기" data-i18n-aria-label="nav.menuOpen">
+        <button class="nav-toggle" aria-label="메뉴 열기" data-i18n-aria-label="nav.menuOpen" aria-expanded="false" aria-controls="nav-menu">
             <span></span><span></span><span></span>
         </button>
     </nav>
@@ -110,7 +125,7 @@
                 <div id="vision" class="spotlight-ambient"></div>
 
                 <div class="spotlight-slide" data-index="0">
-                    <img src="images/stage-materials.jpg" alt="재료 준비" data-i18n-alt="ticker.tag.vision">
+                    <img src="images/stage-materials.jpg" alt="재료 준비" data-i18n-alt="ticker.tag.vision" loading="lazy">
                     <div class="spotlight-copy">
                         <span class="material-icons spotlight-icon">inventory_2</span>
                         <span class="hud-tag" data-i18n="ticker.tag.vision">재료 준비</span>
@@ -120,7 +135,7 @@
                 </div>
 
                 <div class="spotlight-slide" data-index="1">
-                    <img src="images/stage-assembling.jpg" alt="조립" data-i18n-alt="ticker.tag.assembly">
+                    <img src="images/stage-assembling.jpg" alt="조립" data-i18n-alt="ticker.tag.assembly" loading="lazy">
                     <div class="spotlight-copy">
                         <span class="material-icons spotlight-icon">handyman</span>
                         <span class="hud-tag" data-i18n="ticker.tag.assembly">조립</span>
@@ -130,7 +145,7 @@
                 </div>
 
                 <div class="spotlight-slide" data-index="2">
-                    <img src="images/stage-painting.jpg" alt="페인팅" data-i18n-alt="ticker.tag.painting">
+                    <img src="images/stage-painting.jpg" alt="페인팅" data-i18n-alt="ticker.tag.painting" loading="lazy">
                     <div class="spotlight-copy">
                         <span class="material-icons spotlight-icon">palette</span>
                         <span class="hud-tag" data-i18n="ticker.tag.painting">페인팅</span>
@@ -140,7 +155,7 @@
                 </div>
 
                 <div class="spotlight-slide" data-index="3">
-                    <img src="images/stage-sanding.jpg" alt="사포질" data-i18n-alt="ticker.tag.sanding">
+                    <img src="images/stage-sanding.jpg" alt="사포질" data-i18n-alt="ticker.tag.sanding" loading="lazy">
                     <div class="spotlight-copy">
                         <span class="material-icons spotlight-icon">brush</span>
                         <span class="hud-tag" data-i18n="ticker.tag.sanding">사포질</span>
@@ -222,7 +237,7 @@
                         <span class="dev-card-filename">진짜 같은 목공 과정</span>
                     </div>
                     <div class="dev-card-media">
-                        <img src="images/dev-statemachine.jpg" alt="현실적인 작업 과정" data-i18n-alt="dev.card1.imgAlt">
+                        <img src="images/dev-statemachine.jpg" alt="현실적인 작업 과정" data-i18n-alt="dev.card1.imgAlt" loading="lazy">
                     </div>
                     <div class="dev-card-body">
                         <h4 data-i18n="dev.card1.title">현실적인 작업 과정</h4>
@@ -235,7 +250,7 @@
                         <span class="dev-card-filename">자유로운 커스터마이징</span>
                     </div>
                     <div class="dev-card-media">
-                        <img src="images/dev-material.jpg" alt="색상 커스터마이징" data-i18n-alt="dev.card2.imgAlt">
+                        <img src="images/dev-material.jpg" alt="색상 커스터마이징" data-i18n-alt="dev.card2.imgAlt" loading="lazy">
                     </div>
                     <div class="dev-card-body">
                         <h4 data-i18n="dev.card2.title">커스터마이징</h4>
@@ -248,7 +263,7 @@
                         <span class="dev-card-filename">다양한 가구 도면</span>
                     </div>
                     <div class="dev-card-media">
-                        <img src="images/dev-3dmodel.jpg" alt="고품질 3D 가구 모델" data-i18n-alt="dev.card3.imgAlt">
+                        <img src="images/dev-3dmodel.jpg" alt="고품질 3D 가구 모델" data-i18n-alt="dev.card3.imgAlt" loading="lazy">
                     </div>
                     <div class="dev-card-body">
                         <h4 data-i18n="dev.card3.title">고품질 3D 가구 모델</h4>
@@ -261,7 +276,7 @@
                         <span class="dev-card-filename">뿌듯한 완성의 순간</span>
                     </div>
                     <div class="dev-card-media">
-                        <img src="images/dev-ux.jpg" alt="완성 연출" data-i18n-alt="dev.card4.imgAlt">
+                        <img src="images/dev-ux.jpg" alt="완성 연출" data-i18n-alt="dev.card4.imgAlt" loading="lazy">
                     </div>
                     <div class="dev-card-body">
                         <h4 data-i18n="dev.card4.title">완성 연출</h4>
