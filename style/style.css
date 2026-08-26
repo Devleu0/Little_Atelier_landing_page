@@ -278,10 +278,9 @@ nav a.active::after {
     position: relative;
     z-index: 2;
     display: grid;
-    grid-template-columns: 1.4fr 0.60fr;
+    grid-template-columns: 1.2fr 0.80fr;
     align-items: end;
-    gap: 40px;
-    padding: var(--space-4xl) 40px;
+    padding: var(--space-4xl) var(--space-4xl);
 }
 
 .hero-content {
@@ -292,6 +291,7 @@ nav a.active::after {
     background: linear-gradient(135deg, rgba(250, 243, 230, 0.88) 0%, rgba(250, 243, 230, 0.6) 100%);
     backdrop-filter: blur(6px);
     box-shadow: 0 20px 60px rgba(58, 42, 29, 0.12);
+    justify-self: start;
 }
 
 .hero-badge {
@@ -307,6 +307,7 @@ nav a.active::after {
     letter-spacing: 1.5px;
     font-weight: 700;
     margin-bottom: 26px;
+    justify-self: end;
 }
 
 .hero-badge::before {
@@ -329,7 +330,6 @@ nav a.active::after {
 }
 
 .hero-content .subtitle {
-    font-size: 1.3rem;
     color: var(--primary);
     margin-bottom: 30px;
     font-weight: 500;
@@ -337,7 +337,7 @@ nav a.active::after {
 }
 
 .hero-content .catchphrase {
-    font-size: 1.6rem;
+    font-size: clamp(1.4rem, 1vh, 1.5rem);
     font-weight: 700;
     color: var(--secondary);
     letter-spacing: 3px;
