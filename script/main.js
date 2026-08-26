@@ -98,17 +98,44 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  /* ---------- 3. Reveal on scroll ---------- */
+  /* ---------- 3. Reveal on scroll ----------
+     사용성 개선 포인트:
+     1) 같은 부모(예: .dev-grid, .cta-content-wrapper) 안에 묶인 reveal 요소들은
+        순서대로 살짝 시차(stagger)를 줘 스포트라이트/게임플레이 섹션처럼
+        더 의도적인 연출로 보이게 한다.
+     2) rootMargin으로 뷰포트 하단에 닿기 "전"에 조금 앞당겨 트리거해서
+        빠르게 스크롤해도 카드가 늦게 뜨는 느낌(지연감)을 줄인다.
+     3) IntersectionObserver를 지원하지 않는 환경이나 JS 실행이 지연되는
+        경우에도 콘텐츠가 영영 숨겨진 채로 남지 않도록 안전장치를 둔다. */
   const revealEls = document.querySelectorAll('.reveal');
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
-        revealObserver.unobserve(entry.target);
-      }
+
+  // 같은 부모를 공유하는 reveal 요소끼리 그룹으로 묶어 순번(stagger) 지연을 부여
+  const staggerGroups = new Map();
+  revealEls.forEach(el => {
+    const parent = el.parentElement;
+    if (!staggerGroups.has(parent)) staggerGroups.set(parent, []);
+    staggerGroups.get(parent).push(el);
+  });
+  staggerGroups.forEach(group => {
+    group.forEach((el, i) => {
+      if (group.length > 1) el.style.transitionDelay = `${Math.min(i * 0.08, 0.32)}s`;
     });
-  }, { threshold: 0.15 });
-  revealEls.forEach(el => revealObserver.observe(el));
+  });
+
+  if (typeof IntersectionObserver === 'undefined') {
+    // 구형 브라우저 안전장치: 옵저버가 없으면 즉시 모두 노출
+    revealEls.forEach(el => el.classList.add('in-view'));
+  } else {
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
+    revealEls.forEach(el => revealObserver.observe(el));
+  }
 
   /* ---------- 4. Count-up stats ---------- */
   const counters = document.querySelectorAll('.stat-number[data-count]');
