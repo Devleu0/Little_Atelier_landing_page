@@ -976,7 +976,7 @@ nav a.active::after {
     align-items: flex-start;
     gap: 14px;
     padding: 44px 52px;
-    max-width: 640px;
+    max-width: 1200px;
     text-align: left;
 }
 
@@ -1006,7 +1006,6 @@ nav a.active::after {
     letter-spacing: 0.2px;
     line-height: 1.5;
     text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
-    word-break: keep-all;
 }
 
 /* Vertical progress rail on the right edge of the sticky stage */
